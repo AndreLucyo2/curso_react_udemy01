@@ -1,5 +1,7 @@
 //Arquivos de estilo
 
+import MyComponent from "./MyComponent"
+
 const FirstComponent = () => {
 
     //isso é um comentario da função
@@ -12,6 +14,7 @@ const FirstComponent = () => {
         <div>
             {/* Comentario dentroe do JSX */}
             <h1>Meu primeiro componente</h1>
+            <MyComponent/>
         </div>
     )
 
