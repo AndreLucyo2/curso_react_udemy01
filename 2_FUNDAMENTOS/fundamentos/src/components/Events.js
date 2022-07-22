@@ -5,6 +5,14 @@ const Events = () => {
         alert('Me clicou!')
     }
 
+    const renderSomething = (x) =>{
+        if (x) {
+            return <h1>Rendrizou true!</h1>
+        } else{
+            return <h1>Rendrizou false!</h1>            
+        }
+    }
+
     return (
         <div>
             <div>
@@ -23,6 +31,8 @@ const Events = () => {
                 >
                     Cliqui aqui por favor!</button>
             </div>
+            {renderSomething(true)}
+            {renderSomething(false)}
 
         </div>
     )
