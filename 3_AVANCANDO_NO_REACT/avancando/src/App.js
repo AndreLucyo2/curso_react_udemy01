@@ -4,12 +4,14 @@ import './App.css';
 
 import City from "./assets/city.jpg"
 import CarDetails from './components/CarDetails';
+import ChangeMsgState from './components/ChangeMsgState';
 import ConditionalRender from './components/ConditionalRender';
 import Container from './components/Container';
 import ExecuteFunction from './components/ExecuteFunction';
 import FragmentA from './components/FragmentA';
 import ListRender from './components/ListRender';
 import ManageData from './components/ManageData';
+import Mensagen from './components/Mensagen';
 import ShowUserName from './components/ShowUserName';
 
 function App() {
@@ -26,7 +28,14 @@ function App() {
 
   //Passando função por props:deve ser executado no filho
   function showMsg() {
-    alert("Evento do componente PAI!")
+    console.log("Evento do componente PAI!")
+  }
+
+  //Passando função por props:um consome a função e outro altera o valor
+  const [mensagem, setMensagem] = useState("");
+  //Altera a mensagem
+  const handleMessage = (msg) => {
+    setMensagem(msg)
   }
 
   return (
@@ -80,7 +89,12 @@ function App() {
         <h2>Este conteudo children!</h2>
       </Container>
 
+      {/* Função como props */}
       <ExecuteFunction minhaFuncao={showMsg()} />
+
+      {/* State lift */}
+      <Mensagen msg={mensagem}/>
+      <ChangeMsgState alterarMsg={setMensagem}/>
 
     </div>
   );
