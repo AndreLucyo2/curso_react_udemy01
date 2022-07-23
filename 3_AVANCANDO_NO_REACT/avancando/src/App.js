@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './App.css';
 
 import City from "./assets/city.jpg"
+import CarDetails from './components/CarDetails';
 import ConditionalRender from './components/ConditionalRender';
 import ListRender from './components/ListRender';
 import ManageData from './components/ManageData';
@@ -29,13 +30,15 @@ function App() {
       {/* Renderizar listas */}
       <ListRender />
       <ConditionalRender/>
-      
+
       {/* Passando props com valores diretos */}
       <ShowUserName name="Andre"/>
       {/* Passando props com valores por variaveis */}
       <ShowUserName name={name}/>
       {/* Passando props com valores por states */}
       <ShowUserName name={userName}/>
+      {/* desistruturando as props */}
+      <CarDetails brand="Ford" color="Azul" km={10000} />
     </div>
   );
 }
