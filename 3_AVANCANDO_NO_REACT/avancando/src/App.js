@@ -5,6 +5,7 @@ import './App.css';
 import City from "./assets/city.jpg"
 import CarDetails from './components/CarDetails';
 import ConditionalRender from './components/ConditionalRender';
+import FragmentA from './components/FragmentA';
 import ListRender from './components/ListRender';
 import ManageData from './components/ManageData';
 import ShowUserName from './components/ShowUserName';
@@ -62,6 +63,11 @@ function App() {
           km={car.km}
         />
       ))}
+
+      {/* fragments */}
+      <FragmentA/>
+      <FragmentA fragmentProp={"Quarto titulo"}/>
+
     </div>
   );
 }
