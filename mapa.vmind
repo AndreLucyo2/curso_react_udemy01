@@ -1,0 +1,18 @@
+{
+    "root": {
+        "data": {
+            "id": "cln6kizdf800",
+            "created": 1658594187615,
+            "text": "freeMinf no VsCode",
+            "priority": "1",
+            "expandState": "expand",
+            "font-family": "comic sans ms",
+            "font-size": 16,
+            "background": "#1f497d"
+        },
+        "children": []
+    },
+    "template": "right",
+    "theme": "fresh-green-compat",
+    "version": "1.4.43"
+}
