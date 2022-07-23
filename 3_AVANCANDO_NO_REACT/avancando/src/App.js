@@ -2,6 +2,7 @@
 import './App.css';
 
 import City from "./assets/city.jpg"
+import ListRender from './components/ListRender';
 import ManageData from './components/ManageData';
 
 function App() {
@@ -16,7 +17,10 @@ function App() {
       <div>
         <img src={City} alt="Cidade SRC" />
       </div>
-      <ManageData/>
+      {/* Stado da variavel*/}
+      <ManageData />
+      {/* Renderizar listas */}
+      <ListRender />
     </div>
   );
 }
