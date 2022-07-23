@@ -29,16 +29,22 @@ function App() {
       <ManageData />
       {/* Renderizar listas */}
       <ListRender />
-      <ConditionalRender/>
+      <ConditionalRender />
 
       {/* Passando props com valores diretos */}
-      <ShowUserName name="Andre"/>
+      <ShowUserName name="Andre" />
       {/* Passando props com valores por variaveis */}
-      <ShowUserName name={name}/>
+      <ShowUserName name={name} />
       {/* Passando props com valores por states */}
-      <ShowUserName name={userName}/>
+      <ShowUserName name={userName} />
+
       {/* desistruturando as props */}
-      <CarDetails brand="Ford" color="Azul" km={10000} />
+      <CarDetails brand="VW" color="Azul" km={10000} newCar={true} />
+
+      {/* Reaproveitando elemento*/}
+      <CarDetails brand="Ford" color="Vermelho" km={5800} newCar={false} />
+      <CarDetails brand="Fiat" color="Verde" km={0} newCar={true} />
+      
     </div>
   );
 }

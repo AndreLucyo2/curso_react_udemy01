@@ -1,5 +1,5 @@
 
-function CarDetails({brand, km, color}) {
+function CarDetails({ brand, km, color, newCar }) {
     return (
         <div>
             <h2>Detalhes do carro:</h2>
@@ -8,6 +8,8 @@ function CarDetails({brand, km, color}) {
                 <li>Kilometragem: {km}</li>
                 <li>Cor: {color}</li>
             </ul>
+            {/* Validação condiciona se o carro é novo */}
+            {newCar && <p>Carro novo!</p>}
         </div>
     )
 }
