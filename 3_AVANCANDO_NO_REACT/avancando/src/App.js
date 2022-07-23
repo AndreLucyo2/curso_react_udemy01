@@ -1,6 +1,8 @@
 
 import './App.css';
 
+import City from "./assets/city.jpg"
+
 function App() {
   return (
     <div className="App">
@@ -8,6 +10,10 @@ function App() {
       {/* Imagen na pasta public */}
       <div>
         <img src="/img1.jpg" alt="Pausagem public" />
+      </div>
+      {/* Imagen na pasta src/... */}
+      <div>
+        <img src={City} alt="Cidade SRC" />
       </div>
     </div>
   );
