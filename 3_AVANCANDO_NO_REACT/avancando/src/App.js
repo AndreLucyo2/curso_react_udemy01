@@ -5,6 +5,7 @@ import './App.css';
 import City from "./assets/city.jpg"
 import CarDetails from './components/CarDetails';
 import ConditionalRender from './components/ConditionalRender';
+import Container from './components/Container';
 import FragmentA from './components/FragmentA';
 import ListRender from './components/ListRender';
 import ManageData from './components/ManageData';
@@ -65,9 +66,13 @@ function App() {
       ))}
 
       {/* fragments */}
-      <FragmentA/>
-      <FragmentA fragmentProp={"Quarto titulo"}/>
+      <FragmentA />
+      <FragmentA fragmentProp={"Quarto titulo"} />
 
+      {/* Utilizando children */}
+      <Container>
+        <h2>Este conteudo children!</h2>
+      </Container>
     </div>
   );
 }
