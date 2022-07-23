@@ -1,8 +1,8 @@
 
-function CarDetails({ brand, km, color, newCar }) {
+function CarDetails({ brand, km, color, newCar, id }) {
     return (
         <div>
-            <h2>Detalhes do carro:</h2>
+            <h2>Detalhes do carro: {id}</h2>
             <ul>
                 <li>Marca: {brand}</li>
                 <li>Kilometragem: {km}</li>

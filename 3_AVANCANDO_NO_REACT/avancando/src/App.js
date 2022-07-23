@@ -14,6 +14,13 @@ function App() {
   const name = "João";
   const [userName] = useState("Pedro");
 
+  //recebendo a lista do backend - api... 
+  const cars = [
+    { id: 1, brand: "Ferrari", color: "Amarelo", km: 0 },
+    { id: 2, brand: "KIA", color: "Branco", km: 200000 },
+    { id: 3, brand: "Renault", color: "Azul", km: 32000 },
+  ];
+
   return (
     <div className="App">
       <h1>Avançando no react</h1>
@@ -44,7 +51,17 @@ function App() {
       {/* Reaproveitando elemento*/}
       <CarDetails brand="Ford" color="Vermelho" km={5800} newCar={false} />
       <CarDetails brand="Fiat" color="Verde" km={0} newCar={true} />
-      
+
+      {/* Render com loop no array de obj */}
+      {cars.map((car, i) => (
+        <CarDetails
+          key={car.id}
+          id={i + 1}
+          brand={car.brand}
+          color={car.color}
+          km={car.km}
+        />
+      ))}
     </div>
   );
 }
