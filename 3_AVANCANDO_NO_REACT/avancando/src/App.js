@@ -6,6 +6,7 @@ import City from "./assets/city.jpg"
 import CarDetails from './components/CarDetails';
 import ConditionalRender from './components/ConditionalRender';
 import Container from './components/Container';
+import ExecuteFunction from './components/ExecuteFunction';
 import FragmentA from './components/FragmentA';
 import ListRender from './components/ListRender';
 import ManageData from './components/ManageData';
@@ -22,6 +23,11 @@ function App() {
     { id: 2, brand: "KIA", color: "Branco", km: 200000 },
     { id: 3, brand: "Renault", color: "Azul", km: 32000 },
   ];
+
+  //Passando função por props:deve ser executado no filho
+  function showMsg() {
+    alert("Evento do componente PAI!")
+  }
 
   return (
     <div className="App">
@@ -73,6 +79,9 @@ function App() {
       <Container>
         <h2>Este conteudo children!</h2>
       </Container>
+
+      <ExecuteFunction minhaFuncao={showMsg()} />
+
     </div>
   );
 }
