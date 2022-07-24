@@ -8,7 +8,7 @@ function MyForm({user}) {
     const [name, setName] = useState(user? user.name : '');
     const [email, setEmail] = useState(user? user.email : '');
 
-    //Lidar com o nome:
+    //Lidar com o nome: handle = lidar com....
     const handleName = (e) => {
         setName(e.target.value);
     }
@@ -18,7 +18,7 @@ function MyForm({user}) {
     //console.log(name)
     //console.log(email)
 
-    /* 6 - submetendo o forme sem pagereload */
+    /* 6 - submetendo o forme sem pagereload  handle = lidar com.... */
     const handleSubmit = (event)=>{
         //Para de recarregar a pagina:
         event.preventDefault();
@@ -28,7 +28,6 @@ function MyForm({user}) {
         console.log('Enviando formulario!');
         console.log(`Nome: ${name} \nEmail: ${email}`);
     }
-
 
     return (
         <div>

@@ -3,8 +3,8 @@ import MyForm from './components/MyForm';
 
 function App() {
 
+  //carregar a pagina ja pre´-preenchida recebendo dados, pode ser de uma API...
   const user = {name:"Andre", email:"als@teste.com.br"}
-
 
   return (
     <div className="App">
