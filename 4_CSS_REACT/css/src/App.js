@@ -8,6 +8,8 @@ function App() {
   const n = 15;
   const [name] = useState("Andre")
 
+  const redTitle = true;
+
   return (
     <div className="App">
 
@@ -46,6 +48,15 @@ function App() {
           : { color: "blue", color: "green" }}>
         CSS Dinamico , O Nome é {name}
       </h2>
+
+      {/* CSS Inline Dinamico nas classes*/}
+      <h2
+        className={redTitle
+          ? "red-title"
+          : "title"} >
+        Este titulo tem classe CSS dinamica
+      </h2>
+      {/* CSS modules */}
 
     </div>
   );
