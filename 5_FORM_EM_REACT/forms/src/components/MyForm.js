@@ -1,10 +1,12 @@
 import './MyForm.css'
 import { useState } from 'react';
 
-function MyForm() {
+function MyForm({user}) {
     /* 3 - Gerenciar dados do input - obter o dado digitado */
-    const [name, setName] = useState();
-    const [email, setEmail] = useState();
+    //Definir um estado inicial, carregando a pagina
+    //carregar a pagina ja pre´-preenchida
+    const [name, setName] = useState(user? user.name : '');
+    const [email, setEmail] = useState(user? user.email : '');
 
     //Lidar com o nome:
     const handleName = (e) => {
@@ -39,6 +41,7 @@ function MyForm() {
                         name="name"
                         placeholder="Digite o seu nome"
                         onChange={handleName}
+                        value={name}
                     />
                 </div>
 
@@ -50,7 +53,9 @@ function MyForm() {
                         type="email"
                         name="email"
                         placeholder="Digite o seu e-mail"
-                        onChange={(e) => setEmail(e.target.value)} />
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        />
                 </label>
                 {/* 6 - Envio do forme */}
                 <input type="submit" value="Enviar" />
