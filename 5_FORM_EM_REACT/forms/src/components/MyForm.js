@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 function MyForm() {
     /* 3 - Gerenciar dados do input - obter o dado digitado */
-    const[name, setName] = useState();
-    const[email, setEmail] = useState();
+    const [name, setName] = useState();
+    const [email, setEmail] = useState();
 
     //Lidar com o nome:
     const handleName = (e) => {
@@ -13,13 +13,24 @@ function MyForm() {
 
     //pega o stado alterado no momento peganod o valor do unput
     //vai imprimir a cada rendereização do componente.
-    console.log(name)
-    console.log(email)
+    //console.log(name)
+    //console.log(email)
+
+    /* 6 - submetendo o forme sem pagereload */
+    const handleSubmit = (event)=>{
+        //Para de recarregar a pagina:
+        event.preventDefault();
+        //aqui pode ser feita as validações:
+        //Submete o form
+        //faz o processamento
+        console.log('Enviando formulario!');
+        console.log(`Nome: ${name} \nEmail: ${email}`);
+    }
 
 
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 {/* 1 - Criando o form */}
                 <div>
                     <label htmlFor="name">Nome</label>
@@ -32,15 +43,17 @@ function MyForm() {
                 </div>
 
                 {/* 2 - Label envolvendo o input - REcomendado! */}
+                {/* 5 - simplificando a manipulação de dados do input */}
                 <label>
                     <span>E-mail</span>
-                    <input 
-                    type="email" 
-                    name="email" 
-                    placeholder="Digite o seu e-mail" 
-                    onChange={(e)=>setEmail(e.target.value)}/>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Digite o seu e-mail"
+                        onChange={(e) => setEmail(e.target.value)} />
                 </label>
-                <input type="button" value="Enviar" />
+                {/* 6 - Envio do forme */}
+                <input type="submit" value="Enviar" />
             </form>
         </div>
     )
