@@ -1,0 +1,11 @@
+/* Este é um estilo que vasa*/
+p {
+    color: green;
+    background-color: black;
+}
+
+/* Este é um estilo por classe */
+.my-comp-paragraph {
+    color: blue;
+    background-color: gold;
+}
