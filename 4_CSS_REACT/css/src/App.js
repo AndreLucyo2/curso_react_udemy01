@@ -2,6 +2,7 @@ import './App.css';
 import { useState } from 'react'
 import MyComponent from './components/MyComponent';
 import Title from './components/Title';
+import Car from "./components/Car";
 
 function App() {
 
@@ -10,6 +11,14 @@ function App() {
   const [name] = useState("Andre")
 
   const redTitle = true;
+
+  //----------------------------------------
+  const myCars = [
+    { name: "Fusca", km: 10000, color: "Branca" },
+    { name: "Polo", km: 32000, color: "Cinza" },
+    { name: "Onix", km: 0, color: "Preto" },
+  ];
+  //----------------------------------------
 
   return (
     <div className="App">
@@ -60,6 +69,17 @@ function App() {
       {/* CSS modules */}
       <Title />
       <h2 className='my_title'>Teste com classe com mesmo nome, nao gera conflito</h2>
+
+      {/* ------------------------------------ */}
+      <div>
+        <h1>Showroom de carros</h1>
+        <div className="car-container">
+          {myCars.map((car) => (
+            <Car car={car} />
+          ))}
+        </div>
+      </div>
+      {/* ------------------------------------ */}
     </div>
   );
 }
