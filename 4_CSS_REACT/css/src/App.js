@@ -1,6 +1,7 @@
 import './App.css';
 import { useState } from 'react'
 import MyComponent from './components/MyComponent';
+import Title from './components/Title';
 
 function App() {
 
@@ -57,7 +58,8 @@ function App() {
         Este titulo tem classe CSS dinamica
       </h2>
       {/* CSS modules */}
-
+      <Title />
+      <h2 className='my_title'>Teste com classe com mesmo nome, nao gera conflito</h2>
     </div>
   );
 }
