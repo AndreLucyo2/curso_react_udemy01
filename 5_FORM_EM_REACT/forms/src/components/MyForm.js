@@ -12,7 +12,10 @@ function MyForm() {
     }
 
     //pega o stado alterado no momento peganod o valor do unput
+    //vai imprimir a cada rendereização do componente.
     console.log(name)
+    console.log(email)
+
 
     return (
         <div>
@@ -31,7 +34,11 @@ function MyForm() {
                 {/* 2 - Label envolvendo o input - REcomendado! */}
                 <label>
                     <span>E-mail</span>
-                    <input type="email" name="email" placeholder="Digite o seu e-mail" />
+                    <input 
+                    type="email" 
+                    name="email" 
+                    placeholder="Digite o seu e-mail" 
+                    onChange={(e)=>setEmail(e.target.value)}/>
                 </label>
                 <input type="button" value="Enviar" />
             </form>
