@@ -1,12 +1,13 @@
 import './MyForm.css'
 import { useState } from 'react';
 
-function MyForm({user}) {
+function MyForm({ user }) {
     /* 3 - Gerenciar dados do input - obter o dado digitado */
     //Definir um estado inicial, carregando a pagina
     //carregar a pagina ja pre´-preenchida
-    const [name, setName] = useState(user? user.name : '');
-    const [email, setEmail] = useState(user? user.email : '');
+    const [name, setName] = useState(user ? user.name : '');
+    const [email, setEmail] = useState(user ? user.email : '');
+    const [bio, setBio] = useState(user ? user.bio : '');
 
     //Lidar com o nome: handle = lidar com....
     const handleName = (e) => {
@@ -19,15 +20,21 @@ function MyForm({user}) {
     //console.log(email)
 
     /* 6 - submetendo o forme sem pagereload  handle = lidar com.... */
-    const handleSubmit = (event)=>{
+    const handleSubmit = (event) => {
         //Para de recarregar a pagina:
         event.preventDefault();
         //aqui pode ser feita as validações:
         //Submete o form
         //faz o processamento
         console.log('Enviando formulario!');
-        console.log(`Nome: ${name} \nEmail: ${email}`);
-    }
+        console.log(`Nome: ${name} \nEmail: ${email} \nBio: ${bio}`);
+
+        //Limpar o form: 
+        setName("");
+        setEmail("");
+        setBio("");
+
+    };
 
     return (
         <div>
@@ -54,8 +61,19 @@ function MyForm({user}) {
                         placeholder="Digite o seu e-mail"
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
-                        />
+                    />
                 </label>
+                {/* 8 - unput textArea textos grandes */}
+                <label>
+                    <span>Bio</span>
+                    <textarea
+                        name="bio"
+                        placeholder="Descrição do usuario"
+                        onChange={(e) => setBio(e.target.value)}
+                        value={bio}
+                    />
+                </label>
+
                 {/* 6 - Envio do forme */}
                 <input type="submit" value="Enviar" />
             </form>
