@@ -8,6 +8,7 @@ function MyForm({ user }) {
     const [name, setName] = useState(user ? user.name : '');
     const [email, setEmail] = useState(user ? user.email : '');
     const [bio, setBio] = useState(user ? user.bio : '');
+    const [role, setRole] = useState(user ? user.role : '');
 
     //Lidar com o nome: handle = lidar com....
     const handleName = (e) => {
@@ -27,13 +28,13 @@ function MyForm({ user }) {
         //Submete o form
         //faz o processamento
         console.log('Enviando formulario!');
-        console.log(`Nome: ${name} \nEmail: ${email} \nBio: ${bio}`);
+        console.log(`Nome: ${name} \nEmail: ${email} \nFunção:${role} \nBio: ${bio}`);
 
         //Limpar o form: 
         setName("");
         setEmail("");
         setBio("");
-
+        setRole("");
     };
 
     return (
@@ -72,6 +73,17 @@ function MyForm({ user }) {
                         onChange={(e) => setBio(e.target.value)}
                         value={bio}
                     />
+                </label>
+                <label>
+                    <span>Função no sistema</span>
+                    <select name="role"
+                        onChange={(e) => setRole(e.target.value)}
+                        value={role} >
+                        <option value="" hidden>Selecione...</option>
+                        <option value="user">Usuário</option>
+                        <option value="editor">Editor</option>
+                        <option value="admin">administrador</option>
+                    </select>
                 </label>
 
                 {/* 6 - Envio do forme */}
