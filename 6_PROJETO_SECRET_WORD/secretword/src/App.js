@@ -27,10 +27,52 @@ function App() {
   //carregando as palavras:
   const [words] = useState(wordsList);
 
+  //Palavra escolhida
+  const [pickedWord, setPickedWord] = useState("");
+  //Categoria escolhida
+  const [pickedCategory, setPickedCategory] = useState("");
+  //Letras:
+  const [letters, setLetters] = useState([]);
+
+  //Pega uma categoria e uma palavra aleatória
+  const pickWordAndCategory = () => {
+    // Seleciona a categoria aleatória: pick a random category
+    //obtem a lista de categorias
+    const categories = Object.keys(words);
+    //obtem uma da lista de categorias:
+    const category = categories[Math.floor(Math.random() * Object.keys(categories).length)];
+    // obtem a palavra correspondente a categoria: pick a random word
+    const word = words[category][Math.floor(Math.random() * words[category].length)];
+
+
+    //Debig no console:
+    console.log(category, word);
+
+    //Retorna o que foi definido para iniciar o jogo
+    return { category, word };
+  };
+
   //iniciando o jogo:
   const startGame = () => {
-    setGameStage(stages[1].name)
+    //Faz o resgate do jogo: estrutura o jogo
+    const { category, word } = pickWordAndCategory();
+    //Debug
+    console.log(category, word);
 
+    //pega a palavra e transforma em letras:
+    let wordLetters = word.split("");
+    //Normalizar , usa tudo com minusculo
+    wordLetters = wordLetters.map((l) => l.toLowerCase());
+    //Debug
+    console.log(wordLetters);
+
+    //Alterando os estados do jogo:
+    setPickedCategory(category);
+    setPickedWord(word);
+    setLetters(wordLetters);
+
+    //Inicia o jogo
+    setGameStage(stages[1].name);
   }
 
   //Função para processar a letra que o usuario input
@@ -47,7 +89,7 @@ function App() {
     <div className="App">
       {gameStage === "start" && <StartScreen startGame={startGame} />}
       {gameStage === "game" && <Game verifyLetter={verifyLetter} />}
-      {gameStage === "end" && <GameOver  retry={retry}/>}
+      {gameStage === "end" && <GameOver retry={retry} />}
     </div>
   );
 }
