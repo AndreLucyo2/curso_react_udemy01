@@ -64,7 +64,7 @@ function App() {
     return { category, word };
   }, [words]);
 
-  //iniciando o jogo:
+  //iniciando o jogo :
   const startGame = useCallback(() => {
 
     // clear all letters
@@ -89,7 +89,7 @@ function App() {
 
     //Inicia o jogo
     setGameStage(stages[1].name);
-    
+
   }, [pickWordAndCategory]);
 
   //Função para processar a letra que o usuario input
