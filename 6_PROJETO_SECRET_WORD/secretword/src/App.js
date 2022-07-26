@@ -1,5 +1,5 @@
 //Hooks react
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 
 // components
 import StartScreen from "./components/StartScreen";
@@ -27,11 +27,27 @@ function App() {
   //carregando as palavras:
   const [words] = useState(wordsList);
 
+  //iniciando o jogo:
+  const startGame = () => {
+    setGameStage(stages[1].name)
+
+  }
+
+  //Função para processar a letra que o usuario input
+  const verifyLetter = () => {
+    setGameStage(stages[2].name);
+  }
+
+  //Reiniciar o jogo: retorna para o primeiro estagio
+  const retry = () => {
+    setGameStage(stages[0].name);
+  }
+
   return (
     <div className="App">
-      {gameStage === "start" && <StartScreen />}
-      {gameStage === "game" && <Game />}
-      {gameStage === "end" && <GameOver />}
+      {gameStage === "start" && <StartScreen startGame={startGame} />}
+      {gameStage === "game" && <Game verifyLetter={verifyLetter} />}
+      {gameStage === "end" && <GameOver  retry={retry}/>}
     </div>
   );
 }
