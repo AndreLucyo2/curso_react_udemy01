@@ -1,5 +1,5 @@
 //Hooks react
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // components
 import StartScreen from "./components/StartScreen";
@@ -21,6 +21,9 @@ const stages = [
 
 function App() {
 
+  //quantidade de tentativas 
+  const guessesQty = 3;
+
   //Defininco o stagio inicial:
   const [gameStage, setGameStage] = useState(stages[0].name);
 
@@ -39,7 +42,7 @@ function App() {
   //Letras erradas:
   const [wrongLetters, setWrongLetters] = useState([]);
   //tentativas do usuario
-  const [guesses, setGuesses] = useState(3);
+  const [guesses, setGuesses] = useState(guessesQty);
   //pontuação obtida:
   const [score, setScore] = useState(0);
 
@@ -112,14 +115,40 @@ function App() {
         ...actualWrongLetters,
         normalizedLetter,
       ]);
-
+      //contagem de tentativas: 
       setGuesses((actualGuesses) => actualGuesses - 1);
     }
 
   }
 
+  // clear letters state
+  const clearLettersStates = () => {
+    setGuessedLetters([]);
+    setWrongLetters([]);
+  };
+
+
+  // monitora um estado: 
+  // check if guesses ended
+  useEffect(() => {
+
+    //quando é manor ou igual azero
+    if (guesses === 0) {
+
+      //apaga tudo para reiniciar o jogo:
+      // game over and reset all states
+      clearLettersStates();
+
+      //manda para o fim:
+      setGameStage(stages[2].name);
+    }
+  }, [guesses]);//informa qual dado que monitorar
+
   //Reiniciar o jogo: retorna para o primeiro estagio
   const retry = () => {
+    //reiniciar o jogo:
+    setScore(0);
+    setGuesses(guessesQty);
     setGameStage(stages[0].name);
   }
 
