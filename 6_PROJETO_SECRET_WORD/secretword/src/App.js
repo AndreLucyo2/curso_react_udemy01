@@ -1,5 +1,5 @@
 //Hooks react
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 // components
 import StartScreen from "./components/StartScreen";
@@ -47,7 +47,7 @@ function App() {
   const [score, setScore] = useState(0);
 
   //Pega uma categoria e uma palavra aleatória
-  const pickWordAndCategory = () => {
+  const pickWordAndCategory = useCallback(() => {
     // Seleciona a categoria aleatória: pick a random category
     //obtem a lista de categorias
     const categories = Object.keys(words);
@@ -62,10 +62,14 @@ function App() {
 
     //Retorna o que foi definido para iniciar o jogo
     return { category, word };
-  };
+  }, [words]);
 
   //iniciando o jogo:
-  const startGame = () => {
+  const startGame = useCallback(() => {
+
+    // clear all letters
+    clearLettersStates();
+
     //Faz o resgate do jogo: estrutura o jogo
     const { category, word } = pickWordAndCategory();
     //Debug
@@ -85,7 +89,8 @@ function App() {
 
     //Inicia o jogo
     setGameStage(stages[1].name);
-  }
+    
+  }, [pickWordAndCategory]);
 
   //Função para processar a letra que o usuario input
   const verifyLetter = (letter) => {
@@ -143,6 +148,29 @@ function App() {
       setGameStage(stages[2].name);
     }
   }, [guesses]);//informa qual dado que monitorar
+
+  //Condição de vitorioas:
+  // check win condition
+  useEffect(() => {
+    //array de letras unicas: o set faz isso
+    const uniqueLetters = [...new Set(letters)];
+
+    console.log(uniqueLetters);
+    console.log(guessedLetters);
+
+    // win condition: palavra sendo adinivnhada? quando os arrays forem iguais acertou a palavra
+    if (guessedLetters.length === uniqueLetters.length) {
+
+      //implementar a pontuação: add score
+      setScore((actualScore) => (actualScore += 100));
+
+      // restart game with new word
+      startGame();
+
+    }
+  }, [guessedLetters, letters, startGame]);
+
+
 
   //Reiniciar o jogo: retorna para o primeiro estagio
   const retry = () => {
