@@ -1,3 +1,7 @@
+//reaact
+import { useState, useRef } from "react";
+
+//Styles
 import './Game.css'
 
 //recebe todos os estados que prcisa consumir:
@@ -12,6 +16,25 @@ const Game = ({
   score,
 }) => {
 
+  //stado da letra:
+  const [letter, setLetter] = useState("");
+
+  //guardo a referencia de um elemento em um estado
+  const letterInputRef = useRef(null);
+
+  //controla o evendo do formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    //manda a letra:
+    verifyLetter(letter);
+
+    //limpa o input
+    setLetter("");
+
+    //Volte a selecionar o input:
+    letterInputRef.current.focus();
+  };
 
 
 
@@ -47,8 +70,16 @@ const Game = ({
       {/* onde vai adivinhar a letra*/}
       <div className="letterContainer">
         <p>Tente adivinhar a letra da palavra:</p>
-        <form>
-          <input type="text" name='letter' maxLength="1" required />
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="letter"
+            maxLength="1"
+            onChange={(e) => setLetter(e.target.value)}
+            required
+            value={letter}
+            ref={letterInputRef}
+          />
           <button>Jogar!</button>
         </form>
       </div>
