@@ -86,7 +86,36 @@ function App() {
 
   //Função para processar a letra que o usuario input
   const verifyLetter = (letter) => {
-    console.log(letter);
+
+    //Normalizar a letra tudo para minuscula
+    const normalizedLetter = letter.toLowerCase();
+    //valida se ja foi informado a letra
+    if (
+      guessedLetters.includes(normalizedLetter) ||
+      wrongLetters.includes(normalizedLetter)
+    ) {
+      return;
+    }
+
+    //incluir as letras acertadas ou erradas
+    if (letters.includes(normalizedLetter)) {
+      //letras certas:complementa a lista de letras corretas
+      //Adição de elementos no array e mantendo os que existem
+      setGuessedLetters((actualGuessedLetters) => [
+        ...actualGuessedLetters,
+        letter,
+      ]);
+    } else {
+      //Letras erradas
+      //Adição de elementos no array e mantendo os que existem
+      setWrongLetters((actualWrongLetters) => [
+        ...actualWrongLetters,
+        normalizedLetter,
+      ]);
+
+      setGuesses((actualGuesses) => actualGuesses - 1);
+    }
+
   }
 
   //Reiniciar o jogo: retorna para o primeiro estagio
