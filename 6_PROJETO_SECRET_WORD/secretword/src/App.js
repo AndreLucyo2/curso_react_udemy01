@@ -1,9 +1,13 @@
-import './App.css';
+// components
+import StartScreen from "./components/StartScreen";
+
+// styles
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <h2>Projeto secret word!</h2>
+      <StartScreen/>
     </div>
   );
 }
