@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 // 4 - custom hook dinamico : recebe uma url da API retorna os dados
 export const useFetch = (url) => {
-    
+
     //trabalhar com os recebe os dados da API, inicia como null
     const [data, setData] = useState(null);
 
@@ -75,7 +75,7 @@ export const useFetch = (url) => {
         //chama a função: fica dinamico independete do metodo
         httpRequest();
 
-    }, [config, method, url]);
+    }, [config, method, url]);//array de dependencias - sendo monitorados
 
     //retorna os dados da response da requisição: exporta o que quer usar
     //Exporta as configs , para poder alterar

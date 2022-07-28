@@ -12,7 +12,7 @@ const ulrBaseAPI = "http://localhost:3000/products"
 function App() {
 
   //--------------------------------------------------------------------------------------
-  const [products, setProducts] = useState([]);
+  //const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
@@ -31,12 +31,13 @@ function App() {
       price,
     };
 
-    // 5 - seta as config para o tipo da requisição e envia os dados
+    // 5 - seta as config para o tipo da requisição POST e envia os dados
     httpConfig(product, "POST");
 
     //resetar os useState, ja limpa a tela: limpa os inputs
     setName('');
     setPrice('');
+
   };
 
 
