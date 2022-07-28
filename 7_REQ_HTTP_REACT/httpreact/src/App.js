@@ -13,7 +13,7 @@ function App() {
 
   const [products, setProducts] = useState([]);
 
-  
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
@@ -28,16 +28,16 @@ function App() {
   //     //seta os dados
   //     setProducts(data);
   //   };
-  
+
   //   //chama a função:
   //   fetchData();
-  
+
   // }, []);
 
   // 4 - usando o custom hook GET : renomeia data para items
-  const { data: items } = useFetch(ulrBaseAPI);
+  const { data: items, httpConfig } = useFetch(ulrBaseAPI);
   //console.log(items);
-  
+
   // 2 - POST de produto: dispara quando submete do form
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,22 +48,26 @@ function App() {
       price,
     };
 
-    //cria a requisição de POST, ja converte o objeto para json
-    const res = await fetch(ulrBaseAPI, {
-      method: "POST",
-      headers: {
-        //infroma o tipo de dado que vai trafegar
-        "Content-Type": "application/json",
-      },
-      //converte objeto js para Stein json
-      body: JSON.stringify(product),
-    });
+    // //cria a requisição de POST, ja converte o objeto para json
+    // const res = await fetch(ulrBaseAPI, {
+    //   method: "POST",
+    //   headers: {
+    //     //infroma o tipo de dado que vai trafegar
+    //     "Content-Type": "application/json",
+    //   },
+    //   //converte objeto js para Stein json
+    //   body: JSON.stringify(product),
+    // });
 
-    // 3 - carregamento dinamico: Pega o retorno e ja adiciona no front
-    // converte a resposta do POST em objeto js para mostrar ele no front 
-    const addedProduct = await res.json();
-    //seta o useState : com JavaScript object spread Operator "..." mantem os antigos e adiciona o novo
-    setProducts((prevProducts) => [...prevProducts, addedProduct]);
+    // // 3 - carregamento dinamico: Pega o retorno e ja adiciona no front
+    // // converte a resposta do POST em objeto js para mostrar ele no front 
+    // const addedProduct = await res.json();
+    // //seta o useState : com JavaScript object spread Operator "..." mantem os antigos e adiciona o novo
+    // setProducts((prevProducts) => [...prevProducts, addedProduct]);
+
+    // 5 - refatorar post
+    httpConfig(product, "POST");
+
 
     //resetar os useState, ja limpa a tela: limpa os inputs
     setName('');
