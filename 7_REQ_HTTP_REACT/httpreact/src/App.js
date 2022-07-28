@@ -30,7 +30,7 @@ function App() {
 
   }, []);
 
-  // 2 - POST de produto:
+  // 2 - POST de produto: dispara quando submete do form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,8 +40,18 @@ function App() {
       price,
     };
 
-    console.log(product);
-  }
+    //cria a requisição de POST, ja converte o objeto para json
+    const res = await fetch(ulrBaseAPI, {
+      method: "POST",
+      headers: {
+        //infroma o tipo de dado que vai trafegar
+        "Content-Type": "application/json",
+      },
+      //converte objeto js para Stein json
+      body: JSON.stringify(product),
+    });
+
+  };
 
   return (
     <div className="App">
