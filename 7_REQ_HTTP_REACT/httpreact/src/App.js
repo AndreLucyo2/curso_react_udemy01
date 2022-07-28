@@ -10,6 +10,9 @@ function App() {
 
   const [products, setProducts] = useState([]);
 
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+
   // 1 - GET - Resgatando dados:
   useEffect(() => {
     //Faz um GET nos db.json
@@ -27,6 +30,11 @@ function App() {
 
   }, []);
 
+  // 2 - POST de produto:
+  const handleSubmit = async (e) => {
+
+  }
+
   return (
     <div className="App">
       <h1>Lista de produtos</h1>
@@ -35,6 +43,30 @@ function App() {
           <li key={product.id}>{product.name} - R${product.price}</li>
         ))}
       </ul>
+      <div className="add-product">
+        <p>Adicionar produto:</p>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Nome:
+            <input
+              type="text"
+              value={name}
+              name="name"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+          <label>
+            Preço:
+            <input
+              type="number"
+              value={price}
+              name="price"
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </label>
+          <input type="submit" value="Criar" />
+        </form>
+      </div>
     </div>
   );
 }
