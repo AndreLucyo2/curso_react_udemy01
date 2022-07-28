@@ -19,6 +19,21 @@
       "name": "Camisa",
       "price": "10",
       "id": 4
+    },
+    {
+      "name": "AndreLucyo",
+      "price": "10",
+      "id": 5
+    },
+    {
+      "name": "dd",
+      "price": "15",
+      "id": 6
+    },
+    {
+      "name": "y",
+      "price": "9",
+      "id": 7
     }
   ]
 }

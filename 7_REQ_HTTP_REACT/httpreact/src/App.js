@@ -13,10 +13,7 @@ function App() {
 
   const [products, setProducts] = useState([]);
 
-  // 4 - usando o custom hook GET
-  const {data} = useFetch(ulrBaseAPI);
-  console.log(data);
-
+  
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
@@ -31,12 +28,16 @@ function App() {
   //     //seta os dados
   //     setProducts(data);
   //   };
-
+  
   //   //chama a função:
   //   fetchData();
-
+  
   // }, []);
 
+  // 4 - usando o custom hook GET : renomeia data para items
+  const { data: items } = useFetch(ulrBaseAPI);
+  //console.log(items);
+  
   // 2 - POST de produto: dispara quando submete do form
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,7 +75,8 @@ function App() {
     <div className="App">
       <h1>Lista de produtos</h1>
       <ul>
-        {products.map((product) => (
+        {/* faz um if simples so faz o map caso o arry não seja null quandos tiver itens faz o map */}
+        {items && items.map((product) => (
           <li key={product.id}>{product.name} - R${product.price}</li>
         ))}
       </ul>
