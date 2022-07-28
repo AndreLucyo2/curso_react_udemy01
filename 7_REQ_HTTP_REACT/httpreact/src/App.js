@@ -11,18 +11,26 @@ function App() {
   const [products, setProducts] = useState([]);
 
   // 1 - Resgatando dados:
-  useEffect(async () => {
-    const resp = await fetch(ulrBaseAPI);
-    const data = await resp.json();
-    setProducts(data);
+  useEffect(() => {
 
-  },[]);
+    async function fetchData() {
+      const resp = await fetch(ulrBaseAPI);
+      const data = await resp.json();
+      setProducts(data);
+    };
 
-  console.log(products);
+    fetchData();
+
+  }, []);
 
   return (
     <div className="App">
       <h1>Lista de produtos</h1>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>{product.name} - R${product.price}</li>
+        ))}
+      </ul>
     </div>
   );
 }
