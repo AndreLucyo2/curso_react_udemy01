@@ -4,31 +4,38 @@ import './App.css';
 //react
 import { useState, useEffect } from 'react'
 
+// 4 - importa o custom hook para GET
+import { useFetch } from './hooks/useFetch';
+
 const ulrBaseAPI = "http://localhost:3000/products"
 
 function App() {
 
   const [products, setProducts] = useState([]);
 
+  // 4 - usando o custom hook GET
+  const {data} = useFetch(ulrBaseAPI);
+  console.log(data);
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
   // 1 - GET - Resgatando dados:
-  useEffect(() => {
-    //Faz um GET nos db.json
-    async function fetchData() {
-      //faz o get e aguarda a response
-      const resp = await fetch(ulrBaseAPI);
-      //pega a resonse a converte para objeto js
-      const data = await resp.json();
-      //seta os dados
-      setProducts(data);
-    };
+  // useEffect(() => {
+  //   //Faz um GET nos db.json
+  //   async function fetchData() {
+  //     //faz o get e aguarda a response
+  //     const resp = await fetch(ulrBaseAPI);
+  //     //pega a resonse a converte para objeto js
+  //     const data = await resp.json();
+  //     //seta os dados
+  //     setProducts(data);
+  //   };
 
-    //chama a função:
-    fetchData();
+  //   //chama a função:
+  //   fetchData();
 
-  }, []);
+  // }, []);
 
   // 2 - POST de produto: dispara quando submete do form
   const handleSubmit = async (e) => {
