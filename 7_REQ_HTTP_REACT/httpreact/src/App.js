@@ -32,7 +32,15 @@ function App() {
 
   // 2 - POST de produto:
   const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    //Monta o objeto Js, quando o nome do useState é o mesmo da chave pode ser direto
+    const product = {
+      name,
+      price,
+    };
+
+    console.log(product);
   }
 
   return (
