@@ -2,14 +2,17 @@ import { useEffect, useState } from "react";
 
 // 4 - custom hook dinamico : recebe uma url da API retorna os dados
 export const useFetch = (url) => {
+    
     //trabalhar com os recebe os dados da API, inicia como null
     const [data, setData] = useState(null);
 
+    //--------------------------------------------------------------------------------------
     // 5 - refatorando post
     const [config, setConfig] = useState(null);//recebe as config. da rrequisição
     const [method, setMethod] = useState(null);//metodos https
     const [callFetch, setCallFetch] = useState(false);//semrpe que alterar traz os dados novamente
 
+    //--------------------------------------------------------------------------------------
     // 5 - refatorando post: fica dinamico, altera as configs conforme o metodo
     const httpConfig = (data, method) => {
 
@@ -29,6 +32,7 @@ export const useFetch = (url) => {
     };
 
 
+    //--------------------------------------------------------------------------------------
     //cria a requisição: se mudar a url executa novamente
     useEffect(() => {
         //carrega os dados
@@ -48,6 +52,7 @@ export const useFetch = (url) => {
     }, [url, callFetch]);//usa a url como dependencia, pois se mudar a url ele dispara novamente
 
 
+    //--------------------------------------------------------------------------------------
     // 5 - refatorando post : caso tiver alguma alteração na config, dispara novamente 
     useEffect(() => {
 
@@ -70,9 +75,7 @@ export const useFetch = (url) => {
         //chama a função: fica dinamico independete do metodo
         httpRequest();
 
-    }, [config], method, url);
-
-    console.log(config);
+    }, [config, method, url]);
 
     //retorna os dados da response da requisição: exporta o que quer usar
     //Exporta as configs , para poder alterar

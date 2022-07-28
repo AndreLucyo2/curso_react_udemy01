@@ -11,34 +11,17 @@ const ulrBaseAPI = "http://localhost:3000/products"
 
 function App() {
 
+  //--------------------------------------------------------------------------------------
   const [products, setProducts] = useState([]);
-
-
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
-  // 1 - GET - Resgatando dados:
-  // useEffect(() => {
-  //   //Faz um GET nos db.json
-  //   async function fetchData() {
-  //     //faz o get e aguarda a response
-  //     const resp = await fetch(ulrBaseAPI);
-  //     //pega a resonse a converte para objeto js
-  //     const data = await resp.json();
-  //     //seta os dados
-  //     setProducts(data);
-  //   };
+  // 4 - usando o custom hook DINAMICO : renomeia data para items
+  const { data: items, httpConfig } = useFetch(ulrBaseAPI);//recebe uma url, e retorna os dados e as configs
 
-  //   //chama a função:
-  //   fetchData();
 
-  // }, []);
-
-  // 4 - usando o custom hook GET : renomeia data para items
-  const { data: items, httpConfig } = useFetch(ulrBaseAPI);
-  //console.log(items);
-
-  // 2 - POST de produto: dispara quando submete do form
+  //--------------------------------------------------------------------------------------
+  // 2 - POST de produto: dispara quando submete do form e ja retorna os dados e atualiza a tela
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -48,33 +31,16 @@ function App() {
       price,
     };
 
-    // //cria a requisição de POST, ja converte o objeto para json
-    // const res = await fetch(ulrBaseAPI, {
-    //   method: "POST",
-    //   headers: {
-    //     //infroma o tipo de dado que vai trafegar
-    //     "Content-Type": "application/json",
-    //   },
-    //   //converte objeto js para Stein json
-    //   body: JSON.stringify(product),
-    // });
-
-    // // 3 - carregamento dinamico: Pega o retorno e ja adiciona no front
-    // // converte a resposta do POST em objeto js para mostrar ele no front 
-    // const addedProduct = await res.json();
-    // //seta o useState : com JavaScript object spread Operator "..." mantem os antigos e adiciona o novo
-    // setProducts((prevProducts) => [...prevProducts, addedProduct]);
-
-    // 5 - refatorar post
+    // 5 - seta as config para o tipo da requisição e envia os dados
     httpConfig(product, "POST");
-
 
     //resetar os useState, ja limpa a tela: limpa os inputs
     setName('');
     setPrice('');
-
   };
 
+
+  //--------------------------------------------------------------------------------------
   return (
     <div className="App">
       <h1>Lista de produtos</h1>
@@ -93,6 +59,7 @@ function App() {
               type="text"
               value={name}
               name="name"
+              required
               onChange={(e) => setName(e.target.value)}
             />
           </label>
@@ -102,6 +69,7 @@ function App() {
               type="number"
               value={price}
               name="price"
+              required
               onChange={(e) => setPrice(e.target.value)}
             />
           </label>
