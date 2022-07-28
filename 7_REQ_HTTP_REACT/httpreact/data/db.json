@@ -16,14 +16,9 @@
       "price": 29.9
     },
     {
-      "name": "boneca",
-      "price": "11",
+      "name": "Camisa",
+      "price": "10",
       "id": 4
-    },
-    {
-      "name": "Boné ",
-      "price": "50",
-      "id": 5
     }
   ]
 }

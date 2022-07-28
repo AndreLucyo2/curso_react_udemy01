@@ -51,6 +51,16 @@ function App() {
       body: JSON.stringify(product),
     });
 
+    // 3 - carregamento dinamico: Pega o retorno e ja adiciona no front
+    // converte a resposta do POST em objeto js para mostrar ele no front 
+    const addedProduct = await res.json();
+    //seta o useState : com JavaScript object spread Operator "..." mantem os antigos e adiciona o novo
+    setProducts((prevProducts) => [...prevProducts, addedProduct]);
+
+    //resetar os useState, ja limpa a tela: limpa os inputs
+    setName('');
+    setPrice('');
+
   };
 
   return (
