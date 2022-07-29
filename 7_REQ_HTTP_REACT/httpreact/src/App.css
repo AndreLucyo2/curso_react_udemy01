@@ -37,6 +37,10 @@
   }
 }
 
+.loadingx{
+  color: brown;
+  background-color: yellow;
+}
 
 .add-product {
   border-top: 1px solid #000;
@@ -54,3 +58,4 @@ form input {
   flex-direction: column;
   margin-bottom: 15px;
 }
+

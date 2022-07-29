@@ -12,6 +12,11 @@ export const useFetch = (url) => {
     const [method, setMethod] = useState(null);//metodos https
     const [callFetch, setCallFetch] = useState(false);//semrpe que alterar traz os dados novamente
 
+
+    //--------------------------------------------------------------------------------------
+    // 6 - estado de loading
+    const [loading, setLoading] = useState(false);
+
     //--------------------------------------------------------------------------------------
     // 5 - refatorando post: fica dinamico, altera as configs conforme o metodo
     const httpConfig = (data, method) => {
@@ -37,12 +42,19 @@ export const useFetch = (url) => {
     useEffect(() => {
         //carrega os dados
         const fetchData = async () => {
+
+            // 6 - estado de loading : Inicio
+            setLoading(true);
+
             //dispara uma request
             const resp = await fetch(url);
             //recebe os dados e converte para json
             const json = await resp.json();
             //seta os dados no useState para retornar os dados 
             setData(json);
+
+            // 6 - estado de loading : Encerra
+            setLoading(false);
         };
 
         //executa a função
@@ -79,5 +91,6 @@ export const useFetch = (url) => {
 
     //retorna os dados da response da requisição: exporta o que quer usar
     //Exporta as configs , para poder alterar
-    return { data , httpConfig };
+    //Exporta o loading
+    return { data, httpConfig, loading };
 }

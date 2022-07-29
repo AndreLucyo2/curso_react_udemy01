@@ -17,7 +17,8 @@ function App() {
   const [price, setPrice] = useState("");
 
   // 4 - usando o custom hook DINAMICO : renomeia data para items
-  const { data: items, httpConfig } = useFetch(ulrBaseAPI);//recebe uma url, e retorna os dados e as configs
+  //Retorna: os dados, as configs e o loading
+  const { data: items, httpConfig, loading } = useFetch(ulrBaseAPI);//recebe uma url, e retorna os dados e as configs
 
 
   //--------------------------------------------------------------------------------------
@@ -45,12 +46,19 @@ function App() {
   return (
     <div className="App">
       <h1>Lista de produtos</h1>
-      <ul>
-        {/* faz um if simples so faz o map caso o arry não seja null quandos tiver itens faz o map */}
-        {items && items.map((product) => (
-          <li key={product.id}>{product.name} - R${product.price}</li>
-        ))}
-      </ul>
+
+      {/* 6 - Aplicando o loading */}
+      {loading && <p className="loadingx">CARREGANDO DADOS ...</p>}
+      {/* Só mostra a lista caso o loading tiver terminado */}
+      {!loading && (
+        <ul>
+          {/* faz um if simples so faz o map caso o arry não seja null quandos tiver itens faz o map */}
+          {items && items.map((product) => (
+            <li key={product.id}>{product.name} - R${product.price}</li>
+          ))}
+        </ul>
+      )}
+
       <div className="add-product">
         <p>Adicionar produto:</p>
         <form onSubmit={handleSubmit}>
