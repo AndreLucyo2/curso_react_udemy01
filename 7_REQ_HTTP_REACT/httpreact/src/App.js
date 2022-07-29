@@ -82,7 +82,10 @@ function App() {
               onChange={(e) => setPrice(e.target.value)}
             />
           </label>
-          <input type="submit" value="Criar" />
+          {/* 7 - Desativa ações qté que o loading tenha finalizado */}
+         {loading && <input type="submit" disabled value="Aguarda!" /> }
+         {!loading && <input type="submit" value="Criar" /> }
+          
         </form>
       </div>
     </div>
