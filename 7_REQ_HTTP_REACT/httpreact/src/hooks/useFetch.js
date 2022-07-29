@@ -18,6 +18,10 @@ export const useFetch = (url) => {
     const [loading, setLoading] = useState(false);
 
     //--------------------------------------------------------------------------------------
+    // 7 - Tratando erros
+    const [error, setError] = useState(null);
+
+    //--------------------------------------------------------------------------------------
     // 5 - refatorando post: fica dinamico, altera as configs conforme o metodo
     const httpConfig = (data, method) => {
 
@@ -46,12 +50,20 @@ export const useFetch = (url) => {
             // 6 - estado de loading : Inicio
             setLoading(true);
 
-            //dispara uma request
-            const resp = await fetch(url);
-            //recebe os dados e converte para json
-            const json = await resp.json();
-            //seta os dados no useState para retornar os dados 
-            setData(json);
+            // 7 - Tratando erros
+            try {
+                //dispara uma request
+                const resp = await fetch(url);
+                //recebe os dados e converte para json
+                const json = await resp.json();
+                //seta os dados no useState para retornar os dados 
+                setData(json);
+            } catch (error) {
+                alert('Erro aconteceu!');
+
+                //Definir o retorno do erro
+                setError("Ops! Algo deu errado! Tente mais tarde!");
+            }
 
             // 6 - estado de loading : Encerra
             setLoading(false);
@@ -92,5 +104,6 @@ export const useFetch = (url) => {
     //retorna os dados da response da requisição: exporta o que quer usar
     //Exporta as configs , para poder alterar
     //Exporta o loading
-    return { data, httpConfig, loading };
+    //Exporta o retorno do erro
+    return { data, httpConfig, loading, error };
 }

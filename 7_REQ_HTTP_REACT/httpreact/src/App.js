@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 // 4 - importa o custom hook para GET
 import { useFetch } from './hooks/useFetch';
 
-const ulrBaseAPI = "http://localhost:3000/products"
+const ulrBaseAPI = "http://localhost:30s00/products"
 
 function App() {
 
@@ -18,7 +18,8 @@ function App() {
 
   // 4 - usando o custom hook DINAMICO : renomeia data para items
   //Retorna: os dados, as configs e o loading
-  const { data: items, httpConfig, loading } = useFetch(ulrBaseAPI);//recebe uma url, e retorna os dados e as configs
+  //pega o erro
+  const { data: items, httpConfig, loading, error } = useFetch(ulrBaseAPI);//recebe uma url, e retorna os dados e as configs
 
 
   //--------------------------------------------------------------------------------------
@@ -49,8 +50,12 @@ function App() {
 
       {/* 6 - Aplicando o loading */}
       {loading && <p className="loadingx">CARREGANDO DADOS ...</p>}
-      {/* Só mostra a lista caso o loading tiver terminado */}
-      {!loading && (
+
+      {/* 7 - Exibe algo caso der erro*/}
+      {error && <p className="error">{error}</p>}
+
+      {/* Só mostra a lista caso nao der erro */}
+      {!error && (
         <ul>
           {/* faz um if simples so faz o map caso o arry não seja null quandos tiver itens faz o map */}
           {items && items.map((product) => (
@@ -82,7 +87,7 @@ function App() {
               onChange={(e) => setPrice(e.target.value)}
             />
           </label>
-          {/* 7 - Desativa ações qté que o loading tenha finalizado */}
+          {/* 6 - Desativa ações qté que o loading tenha finalizado */}
          {loading && <input type="submit" disabled value="Aguarda!" /> }
          {!loading && <input type="submit" value="Criar" /> }
           
