@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 // 4 - importa o custom hook para GET
 import { useFetch } from './hooks/useFetch';
 
-const ulrBaseAPI = "http://localhost:30s00/products"
+const ulrBaseAPI = "http://localhost:3000/products"
 
 function App() {
 
@@ -42,6 +42,11 @@ function App() {
 
   };
 
+  //--------------------------------------------------------------------------------------
+  //Desafio usando o metodo DELETE
+  const handleRemove = (id) => {
+    httpConfig(id, "DELETE");
+  };
 
   //--------------------------------------------------------------------------------------
   return (
@@ -59,7 +64,10 @@ function App() {
         <ul>
           {/* faz um if simples so faz o map caso o arry não seja null quandos tiver itens faz o map */}
           {items && items.map((product) => (
-            <li key={product.id}>{product.name} - R${product.price}</li>
+            <li key={product.id}>{product.name} - R${product.price}
+              {/* 9 - Criando o botão para o DELETE */}
+              <button className="btnDelete"  onClick={() => handleRemove(product.id)}>Excluir</button>
+            </li>
           ))}
         </ul>
       )}
@@ -88,9 +96,9 @@ function App() {
             />
           </label>
           {/* 6 - Desativa ações qté que o loading tenha finalizado */}
-         {loading && <input type="submit" disabled value="Aguarda!" /> }
-         {!loading && <input type="submit" value="Criar" /> }
-          
+          {loading && <input type="submit" disabled value="Aguarda!" />}
+          {!loading && <input type="submit" value="Criar" />}
+
         </form>
       </div>
     </div>

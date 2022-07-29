@@ -1,49 +1,19 @@
 {
   "products": [
     {
-      "id": 1,
-      "name": "Camisa",
-      "price": 59.9
-    },
-    {
-      "id": 2,
-      "name": "Calça vermelha",
-      "price": 90
-    },
-    {
-      "id": 3,
-      "name": "Boné aba reta",
-      "price": 29.9
-    },
-    {
-      "name": "Camisa",
-      "price": "10",
-      "id": 4
-    },
-    {
-      "name": "carne",
-      "price": "50",
-      "id": 5
-    },
-    {
-      "name": "chave",
-      "price": "50",
-      "id": 6
-    },
-    {
       "name": "boneca",
-      "price": "10",
-      "id": 7
+      "price": "50",
+      "id": 1
     },
     {
       "name": "chave",
-      "price": "50",
-      "id": 8
+      "price": "10",
+      "id": 2
     },
     {
-      "name": "pedra",
-      "price": "45",
-      "id": 9
+      "name": "carro",
+      "price": "5000",
+      "id": 3
     }
   ]
 }

@@ -22,6 +22,10 @@ export const useFetch = (url) => {
     const [error, setError] = useState(null);
 
     //--------------------------------------------------------------------------------------
+    // 8 - recebe o Id para o Delete : desafio 6
+    const [itemId, setItemId] = useState(null);
+
+    //--------------------------------------------------------------------------------------
     // 5 - refatorando post: fica dinamico, altera as configs conforme o metodo
     const httpConfig = (data, method) => {
 
@@ -34,9 +38,21 @@ export const useFetch = (url) => {
                 },
                 body: JSON.stringify(data),
             });
+            setMethod("POST");
 
-            setMethod(method);
-        };
+            //pode receber um delete: Desafio 6
+        } else if (method === "DELETE") {
+            setConfig({
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+            setMethod("DELETE");
+
+            //Aqui seta o id para deletar:
+            setItemId(data);
+        }
 
     };
 
@@ -58,9 +74,11 @@ export const useFetch = (url) => {
                 const json = await resp.json();
                 //seta os dados no useState para retornar os dados 
                 setData(json);
-            } catch (error) {
-                alert('Erro aconteceu!');
+                setMethod(null);
+                setError(null);
 
+            } catch (error) {
+                console.log(error.message);
                 //Definir o retorno do erro
                 setError("Ops! Algo deu errado! Tente mais tarde!");
             }
@@ -88,12 +106,25 @@ export const useFetch = (url) => {
                 // 5 - refatorando post : fica dinamico, pode ser outras urls, e outras confign
                 let fetchOptions = [url, config];
                 //recebe os dados: 
-                const res = await fetch(...fetchOptions);
+                const resp = await fetch(...fetchOptions);
 
-                const json = await res.json();
-                //sempre dispara um GET quando o post for concluido
+                const json = await resp.json();
+                //sempre dispara uma requisição quando o post for concluido
                 setCallFetch(json);
-            }
+
+                //pode receber um delete: Desafio 6
+            } else if (method === "DELETE") {
+
+                //Montar a url de remoção: metodo delete
+                const deleteUrl = `${url}/${itemId}`;
+
+                //recebe algo como respota:
+                const resp = await fetch(deleteUrl, config);
+
+                const json = await resp.json();
+                //sempre dispara uma requisição quando o post for concluido
+                setCallFetch(json);
+            };
         };
 
         //chama a função: fica dinamico independete do metodo

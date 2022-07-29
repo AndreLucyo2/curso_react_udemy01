@@ -32,17 +32,23 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-.loadingx{
+.btnDelete {
+  margin: 0 10px 5px;
+  color: blue;
+}
+
+.loadingx {
   color: brown;
   background-color: yellow;
 }
 
-.error{
+.error {
   color: rgb(231, 247, 8);
   background-color: rgba(240, 64, 11, 0.952);
   padding: 5px;
@@ -64,4 +70,3 @@ form input {
   flex-direction: column;
   margin-bottom: 15px;
 }
-
