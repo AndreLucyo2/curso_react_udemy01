@@ -10,9 +10,11 @@ import About from './pages/About'
 
 //Components
 import Navbar from './components/Navbar';
+import { SearchForm } from './components/SearchForm';
 import Product from './pages/Product';
 import Info from './pages/Info';
 import NotFound from './pages/NotFound';
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -21,11 +23,19 @@ function App() {
       <BrowserRouter>
         {/* 2 - links com react router*/}
         <Navbar />
+
+        {/* 9 - search */}
+        <SearchForm />
+        
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
           {/* 4 - rota dinamica */}
           <Route path='/products/:id' element={<Product />} />
+
+          {/* 9 search params : cria a rota para a busca e renderiza o elemento*/}
+          <Route path="/search" element={<Search />} />
+
           {/* 6 - nested rout - rota mais complexas */}
           <Route path='/products/:id/info' element={<Info />} />
           {/* 7 - Rotas nao existentes - rota não encontrada*/}
