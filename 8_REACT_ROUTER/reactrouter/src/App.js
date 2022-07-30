@@ -10,6 +10,7 @@ import About from './pages/About'
 
 //Components
 import Navbar from './components/Navbar';
+import Product from './pages/Product';
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
+          {/* 4 - rota dinamica */}
+          <Route path='/produts/:id' element={<Product />} />
         </Routes>
       </BrowserRouter>
       <h1>Rodapé</h1>
