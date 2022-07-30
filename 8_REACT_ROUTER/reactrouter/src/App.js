@@ -2,7 +2,7 @@
 import './App.css';
 
 // 1 - Imports do router
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 //Pages
 import Home from './pages/Home'
@@ -38,6 +38,10 @@ function App() {
 
           {/* 6 - nested rout - rota mais complexas */}
           <Route path='/products/:id/info' element={<Info />} />
+
+          {/* 10 - redirecionamento de paginas: caso digitar "comany" redireciona oara about */}
+          <Route path='/company' element={<Navigate to="/about" />} />
+
           {/* 7 - Rotas nao existentes - rota não encontrada*/}
           <Route path='*' element={<NotFound />} />
         </Routes>
