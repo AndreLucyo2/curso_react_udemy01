@@ -7,14 +7,20 @@ import reportWebVitals from './reportWebVitals';
 //importa o provedor de dados:
 import { CounterContextProvider } from './context/CouterContext';
 
+//Importa contexto mais complexos
+import { TitleColorContextProvider } from './components/TitleColorContext';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    
+
     {/*2 - criando o provider */}
+    {/* Abraça todo o elemento que quer utilizar o context */}
     <CounterContextProvider>
-      {/* Abraça todo o elemento que quer utilizar o context */}
-      <App />
+      {/* contexto mais complexos */}
+      <TitleColorContextProvider>
+        <App />
+      </TitleColorContextProvider>
     </CounterContextProvider>
 
   </React.StrictMode>
