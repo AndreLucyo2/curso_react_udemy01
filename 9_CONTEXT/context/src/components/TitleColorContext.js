@@ -5,14 +5,15 @@ import { createContext, useReducer } from "react";
 export const TitleColorContext = createContext();
 
 export const titleColorReducer = (state, action) => {
-    // switch (action.type) {
-    //   case "RED":
-    //     return { ...state, color: "red" };
-    //   case "BLUE":
-    //     return { ...state, color: "blue" };
-    //   default:
-    //     return state;
-    // }
+    //todo o reducer tem uma action, retorna o estado conforme a action recebida
+    switch (action.type) {
+      case "RED":
+        return { ...state, color: "red" };
+      case "BLUE":
+        return { ...state, color: "blue" };
+      default:
+        return state;
+    }
 };
 
 //Exposta o provider
