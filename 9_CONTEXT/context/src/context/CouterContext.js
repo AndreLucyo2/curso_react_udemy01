@@ -7,7 +7,7 @@ export const CounterContext = createContext();
 // 2 - Criar o provider : mantem o chilfren, para renderizar componentes filhos
 export const CounterContextProvider = ({ children }) => {
     //contexto comportilhado, valor e como alterar
-    const [counter, setCounter] = useState(5);
+    const [counter, setCounter] = useState(0);
 
     return (
         //no value, envia os valores de consumo e tambem o de alteração

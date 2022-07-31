@@ -1,8 +1,16 @@
+import { useContext } from 'react'
+import { CounterContext } from '../context/CouterContext'
 
 const About = () => {
-  return (
-    <div>About</div>
-  )
+    //recebe o valor de contexto:
+    const { counter } = useContext(CounterContext);
+
+    return (
+      <div>
+        <h1>About</h1>
+        <p>Valor do contador: {counter}</p>
+      </div>
+    );
 }
 
 export default About
