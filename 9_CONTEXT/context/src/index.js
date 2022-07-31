@@ -4,10 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//importa o provedor de dados:
+import { CounterContextProvider } from './context/CouterContext';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    
+    {/*2 - criando o provider */}
+    <CounterContextProvider>
+      {/* Abraça todo o elemento que quer utilizar o context */}
+      <App />
+    </CounterContextProvider>
+
   </React.StrictMode>
 );
 
