@@ -1,12 +1,20 @@
+//refatorando para ficar mais simples:
+// import { useContext } from 'react'
+// import { CounterContext } from '../context/CouterContext'
 
-import { useContext } from 'react'
+//components:
 import ChangeCounter from '../components/ChangeCounter';
-import { CounterContext } from '../context/CouterContext'
+
+// 4 - refatorando para usar um hook
+import { useCounterContext } from '../hook/useCounterContext';
 
 const Home = () => {
 
   //recebe o valor de contexto:
-  const { counter } = useContext(CounterContext);
+  //const { counter } = useContext(CounterContext);
+  
+  
+  const { counter } = useCounterContext();
 
   return (
     <div>
