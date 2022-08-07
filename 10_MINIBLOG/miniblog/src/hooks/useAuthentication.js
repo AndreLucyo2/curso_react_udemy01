@@ -95,23 +95,68 @@ export const useAuthentication = () => {
         //Evitar vazamento de memória : verifica o fluxo foi cancelado
         checkIfIsCancelled();
 
-        //usa do prórpio firebase
+        //usa do própio firebase
         signOut(auth);
     };
 
+    //HOOK DO LOGIN ==================================================================
+    //login - sig in
+    const login = async (data) => {
+        checkIfIsCancelled();
+
+        setLoading(true);
+        setError(false);
+
+        try {
+            //tenta logar:
+            await signInWithEmailAndPassword(auth, data.email, data.password);
+
+        } catch (error) {
+            console.log(error.message);
+            console.log(typeof error.message);
+            console.log(error.message.includes("user-not"));
+
+            let systemErrorMessage;
+
+            //Tratamento de mensagens para ficar mais amigavel
+            if (error.message.includes("user-not-found")) {
+                systemErrorMessage = "Usuário não encontrado.";
+
+            } else if (error.message.includes("wrong-password")) {
+                systemErrorMessage = "Senha incorreta.";
+
+            } else {
+                systemErrorMessage = "Ocorreu um erro, por favor tenta mais tarde.";
+            }
+
+            console.log(systemErrorMessage);
+
+            //Passa o erro para o componente
+            setError(systemErrorMessage);
+        }
+
+        console.log(error);
+
+        //desativa o loading
+        setLoading(false);
+    };
+
+
+    //TRATAMENTO DE MEMORI LIK =======================================================
     //colocar o cancelado como true assim que sai da pagina
     //é executado apenas um vez
     useEffect(() => {
-        //tratamento de momoria:
+        //tratamento de memoria:
         return () => setCancelled(true);
     }, []);
 
     //retorna para usar nas paginas
     return {
         auth,
-        createUser,
         error,
         loading,
+        createUser,
+        login,
         logout,
     };
 

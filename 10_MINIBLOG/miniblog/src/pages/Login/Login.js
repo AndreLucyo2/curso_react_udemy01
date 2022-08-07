@@ -9,6 +9,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
+    //hook importa a função de login
     const { login, error: authError, loading } = useAuthentication();
 
     const handleSubmit = async (e) => {
