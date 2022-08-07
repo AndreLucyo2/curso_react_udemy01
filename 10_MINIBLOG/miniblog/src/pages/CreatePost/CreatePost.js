@@ -18,6 +18,9 @@ const CreatePost = () => {
     const [tags, setTags] = useState([]);
     const [formError, setFormError] = useState("");
 
+    //redirecionar e navegar
+    const navigate = useNavigate();
+
     //dados do usuario:
     const { user } = useAuthValue();
 
@@ -30,14 +33,25 @@ const CreatePost = () => {
         setFormError("");
 
         //validar a umagem url  -------------------------------------------
-
+        try {
+            //valida a se é uma url
+            new URL(image);
+        } catch (error) {
+            setFormError("A imagem precisa ser uma URL.");
+        }
 
         // create tags array  ---------------------------------------------
+        //tira os espaços, poe lowcase e cria um array separando por virgula 
         const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase());
 
         // check todos os valores -----------------------------------------
+        // check values se faltou algum valor obriga preencher 
+        if (!title || !image || !tags || !body) {
+            setFormError("Por favor, preencha todos os campos!");
+        }
 
-
+        //se tiver algum erro no form nao deve proceguir
+        if (formError) return
 
         //faz o insert:
         insertDocument({
@@ -51,7 +65,8 @@ const CreatePost = () => {
 
 
         // redirect to home page
-
+        //se der tudo certo vai para home
+        navigate("/");
     };
 
     return (
@@ -110,6 +125,7 @@ const CreatePost = () => {
                         Aguarde.. .
                     </button>
                 )}
+                {/* Valida erro tanto na response quanto no form */}
                 {(response.error || formError) && (
                     <p className="error">{response.error || formError}</p>
                 )}
