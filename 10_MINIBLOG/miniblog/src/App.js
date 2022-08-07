@@ -1,8 +1,15 @@
 // Imports do router:
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+//firebase: mapeia a autenticação se foi feita com sucesso
+import { onAuthStateChanged } from "firebase/auth";
+
 //Styles:
 import './App.css';
+
+// hooks
+import { useState, useEffect } from "react";
+import { useAuthentication } from "./hooks/useAuthentication";
 
 //components
 import Navbar from "./components/Navbar";
@@ -18,9 +25,37 @@ import Register from "./pages/Register/Register";
 import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
+  //---------------------------------------------------------
+  //monitorar o status do usuario:
+  const [user, setUser] = useState(undefined);
+  const { auth } = useAuthentication();
+
+  //se for = undefined user ainda esta carregando, 
+  //Serve para nao exibir nada antes de usuario estar autenticado
+  const loadingUser = user === undefined;  
+
+  //Fica monitorando resposta se o user esta autenticado
+  useEffect(() => {
+    //Monitora a autenticação do firebase
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+  }, [auth]);
+  
+  //enquanto o backend nao responte nao carrega o sistema
+  if (loadingUser) {
+    return <p>Carregando...</p>;
+  }
+  
+  //---------------------------------------------------------
+
+
+
+
   return (
     <div className="App">
-      <AuthProvider>
+      {/* Recebe o usuario logado */}
+      <AuthProvider value={{ user }}>
         <BrowserRouter>
           <Navbar />
           <div className="container">
