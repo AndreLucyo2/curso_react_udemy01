@@ -34,7 +34,7 @@ function App() {
 
   //se for = undefined user ainda esta carregando, 
   //Serve para nao exibir nada antes de usuario estar autenticado
-  const loadingUser = user === undefined;  
+  const loadingUser = user === undefined;
 
   //Fica monitorando resposta se o user esta autenticado
   useEffect(() => {
@@ -43,12 +43,12 @@ function App() {
       setUser(user);
     });
   }, [auth]);
-  
+
   //enquanto o backend nao responte nao carrega o sistema
   if (loadingUser) {
     return <p>Carregando...</p>;
   }
-  
+
   //---------------------------------------------------------
 
 
@@ -64,10 +64,42 @@ function App() {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/about' element={<About />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register />} />              
-              <Route path='/posts/create' element={<CreatePost />} />
-              <Route path='/dashboard' element={<Dashboard />} />
+
+              {/* valida e bloqueia rota caso nao tiver logado
+                  valida se nao tem usuario redireciona para o login 
+                  Se tem user vai para novo post
+              */}
+              <Route
+                path="/posts/create"
+                element={user ? <CreatePost /> : <Navigate to="/login" />}
+              />
+
+              {/* valida e bloqueia rota caso nao tiver logado
+                  valida se nao tem usuario redireciona para o login 
+                  Se tem user vai para home
+              */}
+              <Route
+                path='/login'
+                element={!user ? <Login /> : <Navigate to='/' />}
+              />
+
+              {/* valida e bloqueia rota caso nao tiver logado
+                  valida se nao tem usuario redireciona para o criar registro 
+                  Se tem user vai para home
+              */}
+              <Route
+                path="/register"
+                element={!user ? <Register /> : <Navigate to="/" />}
+              />
+
+              {/* valida e bloqueia rota caso nao tiver logado
+                  valida se nao tem usuario redireciona para o login 
+              */}
+              <Route
+                path="/dashboard"
+                element={user ? <Dashboard /> : <Navigate to="/login" />}
+              />
+
             </Routes>
           </div>
           <Footer />

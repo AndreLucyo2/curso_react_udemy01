@@ -41,6 +41,7 @@ const Navbar = () => {
                         </li>
                     </>
                 )}
+                
                 {/* Valida se tiver usuario logado exibe */}
                 {user && (
                     <>
@@ -56,7 +57,6 @@ const Navbar = () => {
                         </li>
                     </>
                 )}
-
 
 
                 <li>
