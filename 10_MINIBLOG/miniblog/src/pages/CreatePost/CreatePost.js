@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 //context
 import { useAuthValue } from "../../contexts/AuthContext";
 
+//HOOK
+import { useInsertDocument } from "../../hooks/useInsertDocument";
+
 
 const CreatePost = () => {
     //Estrutura do post:
@@ -15,11 +18,41 @@ const CreatePost = () => {
     const [tags, setTags] = useState([]);
     const [formError, setFormError] = useState("");
 
+    //dados do usuario:
+    const { user } = useAuthValue();
+
+    //import da função e a response
+    const { insertDocument, response } = useInsertDocument("posts");
+
+    //SUBMINT  ============================================================
     const handleSubmit = (e) => {
         e.preventDefault();
         setFormError("");
 
-    }
+        //validar a umagem url  -------------------------------------------
+
+
+        // create tags array  ---------------------------------------------
+        const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase());
+
+        // check todos os valores -----------------------------------------
+
+
+
+        //faz o insert:
+        insertDocument({
+            title,
+            image,
+            body,
+            tags: tagsArray,
+            uid: user.uid,
+            createdBy: user.displayName,
+        });
+
+
+        // redirect to home page
+
+    };
 
     return (
         <div className={styles.create_post}>
@@ -69,17 +102,17 @@ const CreatePost = () => {
                         value={tags}
                     />
                 </label>
-                <button className="btn">Cadastrar</button>
 
-                {/* Efeito enquanto aguarda o cadastro
-                {!loading && <button className="btn">Cadastrar</button>}
-                {loading && (
+                {/* Efeito enquanto aguarda a resposta do cadastro */}
+                {!response.loading && <button className="btn">Criar post!</button>}
+                {response.loading && (
                     <button className="btn" disabled>
-                        Aguarde...
+                        Aguarde.. .
                     </button>
                 )}
-
-                {error && <p className="error">{error}</p>} */}
+                {(response.error || formError) && (
+                    <p className="error">{response.error || formError}</p>
+                )}
 
             </form>
         </div>
