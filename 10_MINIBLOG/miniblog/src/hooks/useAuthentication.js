@@ -1,4 +1,4 @@
-import { db } from "../firebase/config"; 
+import { db } from "../firebase/config";
 
 //imports do Firebase, detalhe o firebase salva apenas e-mail e senha -- display name vai depois
 import {
@@ -31,7 +31,7 @@ export const useAuthentication = () => {
         }
     };
 
-
+    //HOOK DO REGISTER ================================================================
     //Função para criar o usuário no firebase: deve ser assincrona
     const createUser = async (data) => {
         //valida se não esta cancelado o fluxo
@@ -81,12 +81,22 @@ export const useAuthentication = () => {
                 systemErrorMessage = "Ocorreu um erro, por favor tenta mais tarde.";
             }
 
-             //desativa o loading.
-             setLoading(false);
-             
+            //desativa o loading.
+            setLoading(false);
+
             //recebe e manda a mensagem recebido:
             setError(systemErrorMessage);
         };
+    };
+
+    //HOOK DO LOGOUT =================================================================
+    //logout - sign out
+    const logout = () => {
+        //Evitar vazamento de memória : verifica o fluxo foi cancelado
+        checkIfIsCancelled();
+
+        //usa do prórpio firebase
+        signOut(auth);
     };
 
     //colocar o cancelado como true assim que sai da pagina
@@ -102,6 +112,7 @@ export const useAuthentication = () => {
         createUser,
         error,
         loading,
+        logout,
     };
 
 };

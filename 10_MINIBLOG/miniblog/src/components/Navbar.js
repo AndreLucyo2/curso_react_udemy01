@@ -13,6 +13,8 @@ import { useAuthValue } from "../contexts/AuthContext";
 const Navbar = () => {
     //user do contexto
     const { user } = useAuthValue();
+    //hook função de logout
+    const { logout } = useAuthentication();
 
     return (
         <nav className={styles.navbar}>
@@ -41,7 +43,7 @@ const Navbar = () => {
                         </li>
                     </>
                 )}
-                
+
                 {/* Valida se tiver usuario logado exibe */}
                 {user && (
                     <>
@@ -58,12 +60,20 @@ const Navbar = () => {
                     </>
                 )}
 
-
                 <li>
                     <NavLink to="/about" className={({ isActive }) => (isActive ? styles.active : '')}>
                         Sobre
                     </NavLink>
                 </li>
+
+                {/* Se tem usuario logado mostra menu Sair */}
+                {user && (
+                    <li>
+                        <button onClick={logout}>Sair</button>
+                    </li>
+                )}
+
+
             </ul>
         </nav>
     )
