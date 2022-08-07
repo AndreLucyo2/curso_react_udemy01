@@ -4,11 +4,44 @@ import { useEffect, useState } from "react";
 
 const Register = () => {
 
+  //Usetates:
+  const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  //Erros
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    //nao recarregar pagina automatico
+    e.preventDefault();
+
+    //erro inicia vazio
+    setError("");
+
+    //Cria o objeto para submeter
+    const user = {
+      displayName,
+      email,
+      password,
+    };
+
+    //Valida se as senhas converem
+    if (password !== confirmPassword) {
+      setError("As senhas precisam ser iguais.");
+      return;
+    }
+
+    //Exibir o objeto no console
+    console.log(user);
+
+  };
+
   return (
     <div className={styles.register}>
       <h1>Cadastre-se para postar</h1>
       <p>Crie seu usuário e compartilhe suas histórias</p>
-      <form >
+      <form onSubmit={handleSubmit}>
         <label>
           <span>Nome:</span>
           <input
@@ -16,6 +49,8 @@ const Register = () => {
             name="displayName"
             required
             placeholder="Nome do usuário"
+            onChange={(e) => setDisplayName(e.target.value)}
+            value={displayName}
           />
         </label>
         <label>
@@ -25,6 +60,8 @@ const Register = () => {
             name="email"
             required
             placeholder="E-mail do usuário"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
         </label>
         <label>
@@ -34,6 +71,8 @@ const Register = () => {
             name="password"
             required
             placeholder="Insira a senha"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
         </label>
         <label>
@@ -43,11 +82,12 @@ const Register = () => {
             name="confirmPassword"
             required
             placeholder="Confirme a senha"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={confirmPassword}
           />
         </label>
-        <button className="btn" disabled>
-            Aguarde...
-          </button>
+        <button className="btn">Entrar</button>
+        {error && <p className="error">{error}</p>}
       </form>
     </div>
   );
