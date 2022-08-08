@@ -5,17 +5,19 @@ import styles from "./Home.module.css";
 import { useState } from "react";
 
 // hooks
+import { useFetchDocuments } from "../../hooks/useFetchDocuments";
 import { useNavigate, Link } from "react-router-dom";
 
-
 // components
+import PostDetail from "../../components/PostDetail";
 
 const Home = () => {
 
     //contexto da busca:
     const [query, setQuery] = useState("");
-    //inicar com uma lista de post vazia
-    const [posts] = useState([]);
+
+    //Recebe os documentos e renomeia para post, passa a coleção para buscar "posts"
+    const { documents: posts, loading } = useFetchDocuments("posts");
 
     //submite
     const handleSubmit = (e) => {
@@ -37,9 +39,15 @@ const Home = () => {
                 <button className="btn btn-dark">Pesquisar</button>
             </form>
 
-            {/* lista de post */}
             <div className="post-list">
-                <h1>Posts...</h1>
+                {loading && <p>Carregando...</p>}
+
+                {/* lista de post */}
+                {posts && posts.map((post) => (
+                    //usa um componente para mostrar o post
+                    <PostDetail key={post.id} post={post} />
+                ))}
+
                 {posts && posts.length === 0 && (
                     //Tratamento para caso nao tiver nenhum post ainda:
                     <div className={styles.noposts}>

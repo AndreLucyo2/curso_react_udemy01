@@ -24,7 +24,7 @@ const CreatePost = () => {
     //dados do usuario:
     const { user } = useAuthValue();
 
-    //import da função e a response
+    //hook: que faz o insert: import da função e a response
     const { insertDocument, response } = useInsertDocument("posts");
 
     //SUBMINT  ============================================================
@@ -53,7 +53,7 @@ const CreatePost = () => {
         //se tiver algum erro no form nao deve proceguir
         if (formError) return
 
-        //faz o insert:
+        //Cria a estrutura, propriedades do documento e faz o insert:
         insertDocument({
             title,
             image,

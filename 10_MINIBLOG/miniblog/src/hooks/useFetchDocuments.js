@@ -40,7 +40,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
                 let q;
 
                 //consulta mais simples, tras o que tem ordenado mais novos primeiros
-                q = await query(collectionRefction, orderBy("createdAt", "desc"))
+                q = await query(collectionRef, orderBy("createdAt", "desc"))
 
 
                 //monitora e atualiza os dados se tiver alterações
