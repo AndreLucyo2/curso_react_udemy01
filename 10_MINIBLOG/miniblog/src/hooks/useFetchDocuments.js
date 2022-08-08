@@ -44,15 +44,16 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
                     q = await query(
                         collectionRef,
                         where("tags", "array-contains", search),
-                        orderBy("createdAt", "desc"));
+                        orderBy("createdAt", "desc")
+                    );
 
                 } else {
-
                     //consulta mais simples, traz o que tem ordenado mais novos primeiros
-                    q = await query(collectionRef, orderBy("createdAt", "desc"))
+                    q = await query(
+                        collectionRef,
+                        orderBy("createdAt", "desc")
+                    );
                 };
-
-
 
                 //monitora e atualiza os dados se tiver alterações
                 await onSnapshot(q, (querySnapshot) => {
