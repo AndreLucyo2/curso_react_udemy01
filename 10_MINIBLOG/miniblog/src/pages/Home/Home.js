@@ -16,12 +16,20 @@ const Home = () => {
     //contexto da busca:
     const [query, setQuery] = useState("");
 
+    //Redireciona para a url montada pelo consulta
+    const navigate = useNavigate();
+
     //Recebe os documentos e renomeia para post, passa a coleção para buscar "posts"
     const { documents: posts, loading } = useFetchDocuments("posts");
 
     //submite
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        //se tive valor para buscar.. refina a request
+        if (query) {
+            return navigate(`/search?q=${query}`);
+        }
     };
 
     return (

@@ -20,6 +20,7 @@ import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import Search from "./pages/Search/Search";
 
 // context
 import { AuthProvider } from "./contexts/AuthContext";
@@ -73,6 +74,9 @@ function App() {
                 path="/posts/create"
                 element={user ? <CreatePost /> : <Navigate to="/login" />}
               />
+
+              {/* Rota para a consulta */}
+              <Route path="/search" element={<Search />} />
 
               {/* valida e bloqueia rota caso nao tiver logado
                   valida se nao tem usuario redireciona para o login 
