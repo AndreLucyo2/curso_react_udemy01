@@ -28,7 +28,7 @@ export const useAuthentication = () => {
     function checkIfIsCancelled() {
         if (cancelled) {
             return;
-        }
+        };
     };
 
     //HOOK DO REGISTER ================================================================
