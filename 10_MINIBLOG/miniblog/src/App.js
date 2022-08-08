@@ -21,6 +21,7 @@ import About from "./pages/About/About";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Search from "./pages/Search/Search";
+import Post from "./pages/Post/Post";
 
 // context
 import { AuthProvider } from "./contexts/AuthContext";
@@ -52,9 +53,6 @@ function App() {
 
   //---------------------------------------------------------
 
-
-
-
   return (
     <div className="App">
       {/* Recebe o usuario logado */}
@@ -78,6 +76,10 @@ function App() {
               {/* Rota para a consulta */}
               <Route path="/search" element={<Search />} />
 
+              {/* Rota para detalhes do post */}
+              <Route path="/posts/:id" element={<Post />} />
+
+              {/* ==============  ROTAS PRIVADAS  ====================== */}
               {/* valida e bloqueia rota caso nao tiver logado
                   valida se nao tem usuario redireciona para o login 
                   Se tem user vai para home

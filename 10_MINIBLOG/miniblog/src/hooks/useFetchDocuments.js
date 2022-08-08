@@ -10,7 +10,7 @@ import {
     where,
 } from "firebase/firestore";
 
-//coleção sáo os dados, texto de busca, uid para filtrar
+//coleção sáo os dados, texto de busca, uid para filtrar, recebe parametrs opcionais
 export const useFetchDocuments = (docCollection, search = null, uid = null) => {
 
     const [documents, setDocuments] = useState(null);
@@ -86,7 +86,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
 
     console.log(documents);
 
-    //limpeza de momoria:
+    //limpeza de momoria: útil se mudar de pagina durante um carregamento 
     useEffect(() => {
         return () => setCancelled(true);
     }, []);
