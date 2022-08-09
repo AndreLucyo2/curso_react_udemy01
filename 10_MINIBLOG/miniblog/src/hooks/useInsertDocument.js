@@ -1,7 +1,10 @@
 import { useState, useEffect, useReducer } from "react";
 import { db } from "../firebase/config";
+
+//FIREBASE
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 
+//inicia sem loadin e sem erro
 const initialState = {
     loading: null,
     error: null,
@@ -30,7 +33,7 @@ export const useInsertDocument = (docCollection) => {
 
     // deal with memory leak
     const [cancelled, setCancelled] = useState(false);
-    //antes de fazer alguma ação velida se esta cancelada
+    //antes de fazer alguma ação vAlida se esta cancelada
     const checkCancelBeforeDispatch = (action) => {
         if (!cancelled) {
             //se precisa continuar com hook ou não
@@ -38,7 +41,7 @@ export const useInsertDocument = (docCollection) => {
         }
     };
 
-    ///INSERT DOC recebe um document ------------------------------------------------
+    //INSERT DOC recebe um document ------------------------------------------------
     //inserir o documento
     const insertDocument = async (document) => {
 

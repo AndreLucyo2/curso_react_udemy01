@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 //hooks:
 import { useAuthValue } from '../../contexts/AuthContext'
 import { useFetchDocuments } from '../../hooks/useFetchDocuments'
+import { useDeleteDocument } from "../../hooks/useDeleteDocument";
+
 
 const Dashboard = () => {
 
@@ -15,8 +17,8 @@ const Dashboard = () => {
     //faz a busca dos posts do usuário pelo uid na coleção posts , sem busca , passando o uid
     const { documents: posts } = useFetchDocuments("posts", null, uid);
 
-    const deleteDocument = (id) => {
-    }
+    //inicializar o hook para pegar o metodo deletar: passando a colection
+    const { deleteDocument } = useDeleteDocument("posts");
 
     console.log(uid);
     console.log(posts);
