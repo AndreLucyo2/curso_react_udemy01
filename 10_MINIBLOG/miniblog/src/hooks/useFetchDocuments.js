@@ -10,7 +10,7 @@ import {
     where,
 } from "firebase/firestore";
 
-//coleção sáo os dados, texto de busca, uid para filtrar, recebe parametrs opcionais
+//coleção sáo os dados, texto de busca, uid para filtrar, search e uid são parametrs opcionais
 export const useFetchDocuments = (docCollection, search = null, uid = null) => {
 
     const [documents, setDocuments] = useState(null);
@@ -36,7 +36,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
             const collectionRef = await collection(db, docCollection);
 
             try {
-                //consulta:
+                //Monta query, consultas dinamica:
                 let q;
 
                 if (search) {
@@ -44,6 +44,14 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
                     q = await query(
                         collectionRef,
                         where("tags", "array-contains", search),
+                        orderBy("createdAt", "desc")
+                    );
+
+                } else if (uid) {
+                    //se vier o uid do usuário: busca post pelo uid do usuário
+                    q = await query(
+                        collectionRef,
+                        where("uid", "==", uid),
                         orderBy("createdAt", "desc")
                     );
 

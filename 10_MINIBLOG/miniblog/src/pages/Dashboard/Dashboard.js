@@ -12,16 +12,22 @@ const Dashboard = () => {
     const { user } = useAuthValue();
     const uid = user.uid;
 
-    //posts do usuário
-    const posts = [];
+    //faz a busca dos posts do usuário pelo uid na coleção posts , sem busca , passando o uid
+    const { documents: posts } = useFetchDocuments("posts", null, uid);
 
+    const deleteDocument = (id) => {
+    }
+
+    console.log(uid);
+    console.log(posts);
 
     return (
-        <div>
+        <div className={styles.dashboard}>
             <h1>Dashboard</h1>
-            <p>Gerencie seues posts</p>
+            <p>Gerencie seus posts</p>
 
             {posts && posts.length === 0 ? (
+                //Quanto não tem posts para exibir
                 <div className={styles.noposts}>
                     <p>Não foram encontrados posts</p>
                     <Link to="/posts/create" className="btn">
@@ -29,11 +35,33 @@ const Dashboard = () => {
                     </Link>
                 </div>
             ) : (
+                //Quanto tem posts para exibir
                 <div className={styles.post_header}>
                     <span>Título</span>
                     <span>Ações</span>
                 </div>
             )}
+
+            {/* Quanto tem posts para exibir */}
+            {posts && posts.map((post) => (
+                <div className={styles.post_row} key={post.id}>
+                    <p>{post.title}</p>
+                    <div className={styles.actions}>
+                        <Link to={`/posts/${post.id}`} className="btn btn-outline">
+                            Ver
+                        </Link>
+                        <Link to={`/posts/edit/${post.id}`} className="btn btn-outline">
+                            Editar
+                        </Link>
+                        <button
+                            onClick={() => deleteDocument(post.id)}
+                            className="btn btn-outline btn-danger">
+                            Excluir
+                        </button>
+                    </div>
+                </div>
+            ))}
+
         </div>
     )
 }
