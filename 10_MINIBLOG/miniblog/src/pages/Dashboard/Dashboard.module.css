@@ -69,3 +69,12 @@
   width: 100px;
   font-size: 0.7em;
 }
+
+/*https://pt.stackoverflow.com/questions/118183/limitar-exibi%C3%A7%C3%A3o-de-texto-por-quantidade-de-caracteres-com-css#:~:text=Se%20voc%C3%AA%20n%C3%A3o%20quiser%20essa,pelo%20menos%20nos%20que%20testei).*/
+.div2 {
+  white-space: nowrap; 
+  width: 25em; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  text-align: left;
+}

@@ -47,7 +47,9 @@ const Dashboard = () => {
             {/* Quanto tem posts para exibir */}
             {posts && posts.map((post) => (
                 <div className={styles.post_row} key={post.id}>
-                    <p>{post.title}</p>
+                    <div className={styles.div2}>
+                    {post.title}
+                    </div>
                     <div className={styles.actions}>
                         <Link to={`/posts/${post.id}`} className="btn btn-outline">
                             Ver
