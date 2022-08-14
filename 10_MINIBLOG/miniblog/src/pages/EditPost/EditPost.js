@@ -46,7 +46,7 @@ const EditPost = () => {
     //dados do usuario:
     const { user } = useAuthValue();
 
-    //hook: que faz o update: import da função e a response
+    //hook: que faz o update: import da função e a response passando a coleção
     const { updateDocument, response } = useUpdateDocument("posts");
 
     //SUBMINT  ============================================================

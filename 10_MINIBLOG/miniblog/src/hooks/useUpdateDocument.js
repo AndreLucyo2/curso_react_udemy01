@@ -7,6 +7,7 @@ const initialState = {
   error: null,
 };
 
+//Reducer
 const updateReducer = (state, action) => {
   switch (action.type) {
     case "LOADING":
@@ -21,6 +22,7 @@ const updateReducer = (state, action) => {
 };
 
 export const useUpdateDocument = (docCollection) => {
+
   const [response, dispatch] = useReducer(updateReducer, initialState);
 
   // deal with memory leak
@@ -32,10 +34,13 @@ export const useUpdateDocument = (docCollection) => {
     }
   };
 
+  //Recebe o uid e o documento
   const updateDocument = async (uid, data) => {
+
     checkCancelBeforeDispatch({ type: "LOADING" });
 
     try {
+      
       const docRef = await doc(db, docCollection, uid);
 
       console.log(docRef);
@@ -48,6 +53,7 @@ export const useUpdateDocument = (docCollection) => {
         type: "UPDATED_DOC",
         payload: updatedDocument,
       });
+
     } catch (error) {
       console.log(error);
       checkCancelBeforeDispatch({ type: "ERROR", payload: error.message });
