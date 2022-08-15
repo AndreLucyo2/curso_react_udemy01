@@ -37,6 +37,28 @@ const HookUseEffect = () => {
         //passa uma dependencia que sera monitorado o valor   
     }, [anotherNumber]);
 
+
+    //---- Limpesa do useEfect evitar o vazamento de momoria ----------------
+    // 4 - limpeza do useEffect
+    useEffect(() => {
+
+        //simulando, usado uma função javascript executar algo de tempo em tempo
+        const timer = setTimeout(() => {
+
+            console.log("Hello World!");
+
+            // gera erro sem cleanup
+            //setAnotherNumber(anotherNumber + 1);
+        }, 2000);
+
+        // Realizar exemplo sem clean up (manda parar o timer)
+        // criar um mecanismo que valide quando nao quero mais executar uma determinda ação
+        //devido a esta função anonima o react ja entende, tipo trocar de pagina, etc... 
+        return () => clearTimeout(timer); 
+        
+    }, [anotherNumber]);
+
+
     return (
         <div>
             <h2>useEffect</h2>
