@@ -15,6 +15,14 @@ const HookUseEffect = () => {
         setNumber(number + 1);
     };
 
+    // 2 - array de dependências vazio, quando quer executar algo apenas uma vez
+    useEffect(() => {
+        //mesmo que alterar algo, ele nunca mais é executado
+        console.log("Serei executado apenas uma vez!");
+    }, []);
+
+
+
     return (
         <div>
             <h2>useEffect</h2>
