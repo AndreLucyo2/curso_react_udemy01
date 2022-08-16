@@ -9,6 +9,7 @@ import { SomeContext } from '../components/HookUseContext'
 import HookUseRef from '../components/HookUseRef'
 import HookUseCallback from '../components/HookUseCallback'
 import HookUseMemo from '../components/HookUseMemo'
+import HookUseEffectLayout from '../components/HookUseEffectLayout'
 
 const Home = () => {
     //Recebe o contexto: 
@@ -27,6 +28,7 @@ const Home = () => {
             <HookUseRef />
             <HookUseCallback />
             <HookUseMemo/>
+            <HookUseEffectLayout/>
         </div>
     )
 }
