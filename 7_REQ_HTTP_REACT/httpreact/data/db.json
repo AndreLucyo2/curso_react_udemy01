@@ -1,0 +1,19 @@
+{
+  "products": [
+    {
+      "name": "boneca",
+      "price": "50",
+      "id": 1
+    },
+    {
+      "name": "chave",
+      "price": "10",
+      "id": 2
+    },
+    {
+      "name": "carro",
+      "price": "5000",
+      "id": 3
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+.dashboard {
+  /*todos os textos ao centro*/
+  text-align: center;
+  /*Transforma em flex box os elementos do conteiner*/
+  display: flex;
+  /*Deixa um abaixo do outro*/
+  flex-direction: column;
+  /*Centralizar na horizontal*/
+  justify-content: center;
+  /*Centralizar na vertical*/
+  align-items: center;
+
+}
+
+.dashboard h2 {
+  font-size: 2.2em;
+  margin-bottom: 0.5em;
+}
+
+.dashboard p {
+  color: #aaa;
+  margin-bottom: 1em;
+}
+
+/*quanto nao tem posts*/
+.noposts {
+  text-align: center;
+}
+
+.noposts p {
+  margin-bottom: 1.5em;
+}
+
+.noposts a {
+  padding: 10px 25px;
+}
+
+/*Cabeçalho da tabela*/
+.post_header {
+  /*Transforma em flex box os elementos do conteiner*/
+  display: flex;
+  /*deixa uma para cada lado*/
+  justify-content: space-between;
+  font-weight: bold;
+  /*bora somente em baixo - linha*/
+  border-bottom: 2px solid #ccc;
+  width: 80%;
+  padding: 10px;
+}
+
+/*linha da tabela*/
+.post_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  width: 80%;
+  padding: 10px;
+}
+
+.post_row p {
+  color: #000;
+}
+
+.post_row button,
+.post_row a {
+  margin: 0 5px;
+  height: 30px;
+  width: 100px;
+  font-size: 0.7em;
+}
+
+/*https://pt.stackoverflow.com/questions/118183/limitar-exibi%C3%A7%C3%A3o-de-texto-por-quantidade-de-caracteres-com-css#:~:text=Se%20voc%C3%AA%20n%C3%A3o%20quiser%20essa,pelo%20menos%20nos%20que%20testei).*/
+.div2 {
+  white-space: nowrap; 
+  width: 25em; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  text-align: left;
+}

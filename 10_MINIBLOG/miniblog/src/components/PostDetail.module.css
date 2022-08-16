@@ -1,0 +1,38 @@
+/*Afastar um post um do outro*/
+.post_detail {
+    margin-bottom: 2em;
+}
+
+/*limita a largura da imagem*/
+.post_detail img {
+    max-width: 400px;
+}
+
+/* Afasta os conteudos  */
+.post_detail h2 {
+    margin-bottom: 0.4em;
+}
+
+/* Deixa uma Tag au lado da outra*/
+.post_detail .tags {
+    margin-bottom: 1.2em;
+    display: flex;
+}
+
+/*afasta uma da outra lateralmente*/
+.tags p {
+    margin-right: 0.5em;
+}
+
+/* formata o # da tag*/
+.tags span {
+    font-weight: bold;
+}
+
+/*formata quem criou o post*/
+.createdby {
+    font-style: italic;
+    color: #444;
+    font-size: 0.8em;
+    margin-bottom: 1em;
+}
