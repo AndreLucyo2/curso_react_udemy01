@@ -1,10 +1,13 @@
+//Variaveis de ambiente
+require("dotenv").config();
+
 //carregando as dependencias 
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
 
 //Seta a porta da aplicação:
-const port = 5000;
+const port = process.env.PORT;
 
 //inicializar a aplicação
 const app = express();
