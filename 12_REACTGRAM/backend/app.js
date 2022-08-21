@@ -17,6 +17,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Solve CORS : aponte para onde esta o frontend, depende de onde for colocado o frontend
+// Default para estudo padrão react: http://localhost:3000
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+
+// Upload directory: onde ficam salvo os aquivos estaticos de imagens 
+//nota o path : juntando o diretorio atual com a pasta, ai independente do servidor ele chega até a pasta uploads
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
+// db connection : dados da conexão com o banco de dados 
+require("./config/db.js");
+
 // Chama as rotas do arquivo routes
 const router = require("./routes/Router.js");
 app.use(router);
