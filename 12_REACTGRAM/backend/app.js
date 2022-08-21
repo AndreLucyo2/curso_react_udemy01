@@ -17,6 +17,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Chama as rotas do arquivo routes
+const router = require("./routes/Router.js");
+app.use(router);
+
 //iniciar a aplicação: 
 app.listen(port, () => {
   console.log(`App rodando na porta ${port}`);
