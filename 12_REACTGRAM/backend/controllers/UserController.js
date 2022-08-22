@@ -1,3 +1,4 @@
+//Model 
 const User = require("../models/User");
 
 //bcryptjs
