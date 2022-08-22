@@ -156,10 +156,39 @@ const update = async (req, res) => {
 };
 
 
+// Get user by id ----------------------------------------------------------------------
+const getUserById = async (req, res) => {
+    //Pega o id da url, rota  /:id
+    const { id } = req.params;
+
+    //valida erros , e caso tiver ID inválido pela url
+    try {
+        //busca o user pelo id , e tira a senha 
+        const user = await User.findById(mongoose.Types.ObjectId(id)).select("-password");
+
+
+        // Check if user exists, alguem pode tentar acessar a pagina com um usuario que nao existe
+        if (!user) {
+            res.status(404).json({ errors: ["Usuário não encontrado!"] });
+            return;
+        }
+
+        //retoran 200 ok sucesso
+        res.status(200).json(user);
+
+    } catch (error) {
+        res.status(404).json({ errors: ["Usuário não encontrado!"] });
+        return;
+    }
+
+};
+
+
 //Exporta as função:
 module.exports = {
     register,
     login,
     getCurrentUser,
     update,
+    getUserById,
 };
