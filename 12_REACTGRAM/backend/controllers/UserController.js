@@ -1,9 +1,11 @@
 const User = require("../models/User");
 
-//
+//bcryptjs
 const bcrypt = require("bcryptjs");
-//
+//jsonwebtoken
 const jwt = require("jsonwebtoken");
+//import mongoose
+const { default: mongoose } = require("mongoose");
 
 //Senha de criptografia do token
 const jwtSecret = process.env.JWT_SECRET;
@@ -106,9 +108,51 @@ const getCurrentUser = async (req, res) => {
     res.status(200).json(user);
 };
 
-// Update user
+// Update user   --------------------------------------------------------------------------------------------
+//O campo email nunca será atualizado, pois deve ser unico.
 const update = async (req, res) => {
-    res.send("Atualizado!")
+    //Recebe os dados da requisição
+    const { name, password, bio } = req.body;
+
+    //valida se o arquivo chegou pela requisição
+    let profileImage = null;
+    if (req.file) {
+        //pega o nome do arquivo da imagem:
+        profileImage = req.file.filename;
+    }
+
+    //pega o usuario da requisição:
+    const reqUser = req.user;
+    //busca o usuario pelo ID, (conver o ID para poder comparar e sem a senha)
+    const user = await User.findById(mongoose.Types.ObjectId(reqUser._id)).select("-password");
+
+    //Alterar pelo novo nome que chegou pela requisição
+    if (name) {
+        user.name = name;
+    }
+
+    //Monta a senha novamente para poder atualizar pela nova que recebeu pea requisição
+    if (password) {
+        const salt = await bcrypt.genSalt();
+        const passwordHash = await bcrypt.hash(password, salt);
+        user.password = passwordHash;
+    }
+
+    //valida se vei a imagem:
+    if (profileImage) {
+        user.profileImage = profileImage;
+    }
+
+    //valida se recebeu algo na bio
+    if (bio) {
+        user.bio = bio;
+    }
+
+    //Espera fazer o update:
+    await user.save();
+
+    //Se der sucesso retorna 200 
+    res.status(200).json(user);
 };
 
 
