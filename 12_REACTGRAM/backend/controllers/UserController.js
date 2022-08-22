@@ -96,10 +96,20 @@ const login = async (req, res) => {
     });
 };
 
+// Get logged in user ---------------------------------------------------------------------------------------
+const getCurrentUser = async (req, res) => {
+    
+    //Recupera dados do perfil do usuário logado, pode reutilizar depois 
+    const user = req.user;
+
+    //retorna sucesso com os dados do usuario menos o campos senha 
+    res.status(200).json(user);
+};
 
 
 //Exporta as função:
 module.exports = {
     register,
     login,
+    getCurrentUser,
 };
