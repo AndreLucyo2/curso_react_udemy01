@@ -3,6 +3,7 @@
 //recebe o body da requisição e permite validar cada propriedade:
 const { body } = require("express-validator");
 
+//-------------------------------------------------------------------------------------
 const userCreateValidation = () => {
     //validações por campo do body
     return [
@@ -39,7 +40,22 @@ const userCreateValidation = () => {
     ];
 };
 
+//-------------------------------------------------------------------------------------
+const loginValidation = () => {
+    //validar ao fazer login , e-mail e senha são obrigatorios para logar:
+    return [
+        body("email")
+            .isString()
+            .withMessage("O e-mail é obrigatório.")
+            .isEmail()
+            .withMessage("Insira um e-mail válido"),
+        body("password").isString().withMessage("A senha é obrigatória."),
+    ];
+};
+
+
 //Exporta como objeto:
 module.exports = {
     userCreateValidation,
+    loginValidation,
 };
