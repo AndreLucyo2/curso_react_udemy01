@@ -218,6 +218,73 @@ const likePhoto = async (req, res) => {
     }
 };
 
+// Comment functionality
+const commentPhoto = async (req, res) => {
+    //pega id da foto pela url
+    const { id } = req.params;
+    //pega o comentario pela requisição
+    const { comment } = req.body;
+    //obtem o usuario da requisição
+    const reqUser = req.user;
+
+    try {
+        //encontra o usuario pelo id
+        const user = await User.findById(reqUser._id);
+        //encontra a foto pelo id
+        const photo = await Photo.findById(id);
+
+        // Check if photo exists
+        if (!photo) {
+            res.status(404).json({ errors: ["Foto não encontrada!"] });
+            return;
+        }
+
+        // Put comment in the array of comments,cria o objeto com os dados do comentário
+        const userComment = {
+            comment,
+            userName: user.name,
+            userImage: user.profileImage,
+            userId: user._id,
+        };
+
+        //Insere o comentario no array de comentarios
+        photo.comments.push(userComment);
+
+        //salva a foto
+        await photo.save();
+
+        //retorna o resultado para o front
+        res.status(200).json({
+            comment: userComment,
+            message: "Comentário adicionado com sucesso!",
+        });
+
+    } catch (error) {
+        res.status(404).json({ errors: ["Foto não encontrada!"] });
+        return;
+    };
+
+};
+
+// Search a photo by title, buscar fotos pelo titulo: q é o valor para buscar
+//Exemplo: */api/photos/search?q=y  -> busque todas as fotos que no titulo contenha  y
+const searchPhotos = async (req, res) => {
+    //recebe a query string q da url
+    const { q } = req.query;
+
+    //pega o array de fotos: filtrando pelo titulo usando expressão regular: que contenha a string recebida no q
+    const photos = await Photo.find({ title: new RegExp(q, "i") }).exec();
+
+    //ver como validar em caso de retorno de  buscas vazias
+    // if (photos == []) {
+    //     res.status(200).json({ errors: ["Nenhuma foto corresponde a busca!"] });
+    //     return;
+    // }
+
+    //retorna o array para o front
+    res.status(200).json(photos);
+
+};
 
 
 module.exports = {
@@ -228,5 +295,7 @@ module.exports = {
     getPhotoById,
     updatePhoto,
     likePhoto,
+    commentPhoto,
+    searchPhotos,
 };
 
