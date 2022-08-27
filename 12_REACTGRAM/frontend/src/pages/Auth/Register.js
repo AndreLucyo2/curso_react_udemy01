@@ -2,6 +2,7 @@ import "./Auth.css";
 
 // Components
 import { Link } from "react-router-dom";
+import Message from "../../components/Message";
 
 // Hooks
 import { useState, useEffect } from "react";
@@ -22,6 +23,7 @@ const Register = () => {
 
     //Extrai o estado que esta rolando no slice com o useSelector 
     //Permite pegar o estado e de qual reducer/context
+    //o error é usado para mostrar na mensagem, vem do slice
     const { loading, error } = useSelector((state) => state.auth);
 
     const handleSubmit = (e) => {
@@ -76,7 +78,10 @@ const Register = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     value={confirmPassword || ''}
                 />
-                <input type="submit" value="Cadastrar" />
+                {/* valida o estado para amostrar as mensagens e controlar o stado do botão*/}
+                {!loading && <input type="submit" value="Cadastrar" />}
+                {loading && <input type="submit" disabled value="Aguarde..." />}
+                {error && <Message msg={error} type="error" />}                
             </form>
             <p>
                 Já tem conta? <Link to="/login">Clique aqui</Link>

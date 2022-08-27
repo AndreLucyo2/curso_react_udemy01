@@ -27,12 +27,13 @@ const register = async (data) => {
             localStorage.setItem("user", JSON.stringify(res));
         }
 
+        //Retorna a resposta para ser utlizado nos demais pontos
         return res;
+
     } catch (error) {
         console.log(error);
     }
 };
-
 
 //retorna os objetos :
 const authService = {
