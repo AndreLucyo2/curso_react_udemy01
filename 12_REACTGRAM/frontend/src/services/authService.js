@@ -19,9 +19,7 @@ const register = async (data) => {
         //monta a request complesta apontando para a url correspondente 
         //no then recebe dados e converte para obj javascript
         //Se der erro, pega e retorna o erro
-        const res = await fetch(api + "/users/register", config)
-            .then((res) => res.json())
-            .catch((err) => err);
+        const res = await fetch(api + "/users/register", config).then((res) => res.json()).catch((err) => err);
 
         //caso receber uma resposta: recebe a resposta do backend
         if (res) {

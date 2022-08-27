@@ -5,8 +5,10 @@ import { Link } from "react-router-dom";
 
 // Hooks
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-// Redux
+// Redux : importa os metodos vindo do slice
+import { register, reset } from "../../slices/authSlice";
 
 const Register = () => {
     //states:
@@ -14,6 +16,13 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    //Permite usar as funções do redux
+    const dispatch = useDispatch();
+
+    //Extrai o estado que esta rolando no slice com o useSelector 
+    //Permite pegar o estado e de qual reducer/context
+    const { loading, error } = useSelector((state) => state.auth);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,7 +36,15 @@ const Register = () => {
 
         console.log(user);
 
+        //recebe os dados do user e manda para a API e aguarda a resposta
+        dispatch(register(user));
     };
+
+
+    // Clean all auth states : limpar os dados sempre que rolar um dispatch 
+    useEffect(() => {
+        dispatch(reset());
+    }, [dispatch]);
 
 
     return (
