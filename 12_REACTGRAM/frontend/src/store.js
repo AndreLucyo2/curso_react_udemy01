@@ -1,6 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-//cria e controla os contextos para cada entidade 
+//recebe o reducer do slice:
+import authReducer from "./slices/authSlice";
+
+//cria e controla os contextos para cada entidade devolvidas pelo slice
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    auth: authReducer,
+  },
 });
