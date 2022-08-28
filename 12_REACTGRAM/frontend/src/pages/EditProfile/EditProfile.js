@@ -44,7 +44,22 @@ const EditProfile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+
     }
+
+    //lida com a imgem recebida
+    const handleFile = (e) => {
+        // image preview
+        const image = e.target.files[0];
+
+        //coloca a imagem na tela
+        setPreviewImage(image);
+
+        // change image state
+        setProfileImage(image);
+    };
+
 
     return (
         <div id="edit-profile">
@@ -53,7 +68,20 @@ const EditProfile = () => {
                 Adicione uma imagem de perfil, e conte mais um pouco sobre você...
             </p>
 
-            {/* preview da imagem */}
+            {/* preview da imagem, chea se o user tem imagem ou se chegou nova imagem */}
+            {/* preview da imagem monstra primeiro, caso contrario mostra a oimagem atual */}
+            {/* URL.createObjectURL(previewImage) conver a imagem selecionada para umagem html, dando um prevew */}
+            {(user.profileImage || previewImage) && (
+                <img
+                    className="profile-image"
+                    src={
+                        previewImage
+                            ? URL.createObjectURL(previewImage)
+                            : `${uploads}/users/${user.profileImage}`
+                    }
+                    alt={user.name}
+                />
+            )}
 
             <form onSubmit={handleSubmit}>
                 <input
@@ -71,9 +99,10 @@ const EditProfile = () => {
                     value={email || ""}
                 />
 
+                {/* Quando altera a imagem dispara o evendo para dar um preview na tela */}
                 <label>
                     <span>Imagem de Perfil:</span>
-                    <input type="file" />
+                    <input type="file" onChange={handleFile} />
                 </label>
 
                 <label>
