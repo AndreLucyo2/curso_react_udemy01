@@ -19,8 +19,26 @@ const profile = async (user, token) => {
 };
 
 
+// Update user details
+const updateProfile = async (user, token) => {
+    //esta requisição pode ter imegns
+    const config = requestConfig("PUT", user, token, true);
+
+    try {
+        const res = await fetch(api + "/users/", config)
+            .then((res) => res.json())
+            .catch((err) => err);
+
+        return res;
+
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const userService = {
     profile,
+    updateProfile,
 };
 
 export default userService;
