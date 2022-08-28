@@ -16,7 +16,7 @@ const userSchema = new Schema(
     }
 );
 
-//Definir o model com o seu Schema:
+//Definir o model com o seu Schema: o mongo cria a coleção com os campos do model
 User = mongoose.model("User", userSchema);
 
 module.exports = User;

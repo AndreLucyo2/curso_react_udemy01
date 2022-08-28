@@ -25,6 +25,7 @@ const photoSchema = new Schema(
     }
 );
 
+//Definir o model com o seu Schema: o mongo cria a coleção com os campos do model
 Photo = mongoose.model("Photo", photoSchema);
 
 module.exports = Photo;
