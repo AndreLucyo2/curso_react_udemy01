@@ -10,10 +10,9 @@ const initialState = {
     message: null,
 };
 
-//funções
+//funções ----------------------------------------------------------------------------------
 // Get user details, for edit data, pega os dados para por na tela
-export const profile = createAsyncThunk(
-    "user/profile",
+export const profile = createAsyncThunk("user/profile",
     async (user, thunkAPI) => {
         //obtem o token la do redux, pega do authSlice
         const token = thunkAPI.getState().auth.user.token;
@@ -26,6 +25,27 @@ export const profile = createAsyncThunk(
     }
 );
 
+// Update user details
+export const updateProfile = createAsyncThunk("user/update",
+    async (user, thunkAPI) => {
+        //obtem o token
+        const token = thunkAPI.getState().auth.user.token;
+        //manda a request para a API
+        const data = await userService.updateProfile(user, token);
+
+        // Check for errors, 
+        if (data.errors) {
+            return thunkAPI.rejectWithValue(data.errors[0]);
+        }
+
+        console.log(data);
+
+        return data;
+    }
+);
+
+
+// -- REDUCER E CONTROLE DE ESTADOS ----------------------------------------------------- 
 //reducer , com o construtor do reducer pelos estados
 export const userSlice = createSlice({
     name: "user",
@@ -46,6 +66,22 @@ export const userSlice = createSlice({
                 state.success = true;
                 state.error = null;
                 state.user = action.payload;
+            })
+            .addCase(updateProfile.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateProfile.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                state.user = action.payload;
+                state.message = "Usuário atualizado com sucesso!";
+            })
+            .addCase(updateProfile.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                state.user = null;
             })
     }
 });
