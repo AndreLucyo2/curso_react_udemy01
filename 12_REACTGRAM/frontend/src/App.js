@@ -1,7 +1,7 @@
 import "./App.css";
 
 // Hooks
-
+import { useAuth } from "./hooks/useAuth";
 
 // router
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -18,15 +18,24 @@ import Register from "./pages/Auth/Register";
 
 
 function App() {
+  //valida se esta autenticado
+  const { auth, loading } = useAuth();
+
+  //caso nao autenticado retorna um loading, aqui da para criar um componente mais elaborado de loading
+  if (loading) {
+    return <p>Carregando...</p>;
+  }
+
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar />
         <div className="container">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            {/*if ternário valida se esta autenticado, caso contrario faz os redirecionamentos */}
+            <Route path="/" element={auth ? <Home /> : <Navigate to="/login" />} />
+            <Route path="/login" element={!auth ? <Login /> : <Navigate to="/" />} />
+            <Route path="/register" element={!auth ? <Register /> : <Navigate to="/" />} />
           </Routes>
         </div>
         <Footer />

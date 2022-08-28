@@ -48,7 +48,6 @@ const Register = () => {
         dispatch(reset());
     }, [dispatch]);
 
-
     return (
         <div id="register">
             <h2>ReactGram</h2>
