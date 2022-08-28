@@ -39,7 +39,7 @@ const getUserDetails = async (id) => {
     const config = requestConfig("GET");
 
     try {
-        //obtem o user
+        //dispara a requisição para obter o user
         const res = await fetch(api + "/users/" + id, config)
             .then((res) => res.json())
             .catch((err) => err);

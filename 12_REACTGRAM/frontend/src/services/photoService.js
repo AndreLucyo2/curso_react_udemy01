@@ -18,10 +18,10 @@ const publishPhoto = async (data, token) => {
     }
 };
 
-// Get user photos
-const getUserPhotos = async (id) => {
-    //monta a request:
-    const config = requestConfig("GET");
+// Get user photos: como é uma rota privada precisa do ide e do token
+const getUserPhotos = async (id, token) => {
+    //monta a request: nao recebe dados mas recebo o token
+    const config = requestConfig("GET", null, token);
 
     try {
         //dispara a requisição do para a API com o ID
