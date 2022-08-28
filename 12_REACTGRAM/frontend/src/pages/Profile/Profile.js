@@ -22,6 +22,11 @@ import { useParams } from "react-router-dom";
 
 // Redux
 import { getUserDetails } from "../../slices/userSlice";
+import {
+    publishPhoto,
+    resetMessage,
+} from "../../slices/photoSlice";
+
 
 
 const Profile = () => {
@@ -35,6 +40,19 @@ const Profile = () => {
     //usuario autenticado : renomeia user para userAuth
     const { user: userAuth } = useSelector((state) => state.auth);
 
+    //obtem os estados da photo, renomeando
+    const {
+        photos,
+        loading: loadingPhoto,
+        error: errorPhoto,
+        message: messagePhoto,
+    } = useSelector((state) => state.photo);
+
+    //cria os estates da foto
+    const [title, setTitle] = useState("");
+    const [image, setImage] = useState("");
+
+
     //controle de fotos, acesso os dois forms a nivel de DOM deste elemento
     //Usando o hook de referencias do react
     // New form and edit form refs
@@ -46,9 +64,46 @@ const Profile = () => {
         dispatch(getUserDetails(id));
     }, [dispatch, id]);
 
+    // Reset component message
+    function resetComponentMessage() {
+        setTimeout(() => {
+            dispatch(resetMessage());
+        }, 2000);
+    }
+
+    // change image state
+    const handleFile = (e) => {
+        const image = e.target.files[0];
+
+        //pega a imagem e setar o estado da imagem 
+        setImage(image);
+    };
+
     // Publish a new photo
     const submitHandle = (e) => {
         e.preventDefault();
+
+        const photoData = {
+            title,
+            image,
+        };
+
+        // build form data
+        const formData = new FormData();
+
+        //cria um objeto de foto
+        const photoFormData = Object.keys(photoData).forEach((key) =>
+            formData.append(key, photoData[key])
+        );
+        formData.append("photo", photoFormData);
+
+        dispatch(publishPhoto(formData));
+
+        setTitle("");
+
+        //controla o tempo de exibição da menssagem
+        resetComponentMessage();
+
     };
 
     // Update photo title
@@ -78,23 +133,32 @@ const Profile = () => {
                 <>
                     <div className="new-photo" ref={newPhotoForm}>
                         <h3>Compartilhe algum momento seu:</h3>
-                        <form >
+                        <form onSubmit={submitHandle}>
                             <label>
                                 <span>Título para a foto:</span>
                                 <input
                                     type="text"
                                     placeholder="Insira um título"
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    value={title || ""}
                                 />
                             </label>
                             <label>
                                 <span>Imagem:</span>
-                                <input type="file" />
+                                <input type="file" onChange={handleFile} />
                             </label>
 
-                            <input type="submit" value="Postar" />
+                            {/* Valida o estado da foto */}
+                            {!loadingPhoto && <input type="submit" value="Postar" />}
+                            {loadingPhoto && (
+                                <input type="submit" disabled value="Aguarde..." />
+                            )}
 
                         </form>
                     </div>
+                    {/* Valida e mostra se deu erro na foto*/}
+                    {errorPhoto && <Message msg={errorPhoto} type="error" />}
+                    {messagePhoto && <Message msg={messagePhoto} type="success" />}
                 </>
             )}
 
