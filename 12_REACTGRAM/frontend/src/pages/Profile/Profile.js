@@ -35,12 +35,27 @@ const Profile = () => {
     //usuario autenticado : renomeia user para userAuth
     const { user: userAuth } = useSelector((state) => state.auth);
 
+    //controle de fotos, acesso os dois forms a nivel de DOM deste elemento
+    //Usando o hook de referencias do react
+    // New form and edit form refs
+    const newPhotoForm = useRef();
+    const editPhotoForm = useRef();
 
     // Load user data, dispara quando cheda o id
     useEffect(() => {
         dispatch(getUserDetails(id));
     }, [dispatch, id]);
 
+    // Publish a new photo
+    const submitHandle = (e) => {
+        e.preventDefault();
+    };
+
+    // Update photo title
+    const handleUpdate = (e) => {
+        e.preventDefault();
+
+    };
 
     //espera carregar o user para mostrar os dados 
     if (loading) {
@@ -58,6 +73,31 @@ const Profile = () => {
                     <p>{user.bio}</p>
                 </div>
             </div>
+            {/*Checar se o usuario que esta acessando é o dono dele */}
+            {id === userAuth._id && (
+                <>
+                    <div className="new-photo" ref={newPhotoForm}>
+                        <h3>Compartilhe algum momento seu:</h3>
+                        <form >
+                            <label>
+                                <span>Título para a foto:</span>
+                                <input
+                                    type="text"
+                                    placeholder="Insira um título"
+                                />
+                            </label>
+                            <label>
+                                <span>Imagem:</span>
+                                <input type="file" />
+                            </label>
+
+                            <input type="submit" value="Postar" />
+
+                        </form>
+                    </div>
+                </>
+            )}
+
         </div>
     )
 }
