@@ -15,12 +15,32 @@ import Message from "../../components/Message";
 
 const EditProfile = () => {
 
+    const dispatch = useDispatch();
+
+    const { user, message, error, loading } = useSelector((state) => state.user);
+
+    //states
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [profileImage, setProfileImage] = useState("");
     const [bio, setBio] = useState("");
     const [previewImage, setPreviewImage] = useState("");
+
+    // Load user data
+    useEffect(() => {
+        dispatch(profile());
+    }, [dispatch]);
+
+    // fill user form, sempre que o user mudar ele é disparado 
+    useEffect(() => {
+        //valida se tem um user: 
+        if (user) {
+            setName(user.name);
+            setEmail(user.email);
+            setBio(user.bio);
+        }
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -53,7 +73,7 @@ const EditProfile = () => {
 
                 <label>
                     <span>Imagem de Perfil:</span>
-                    <input type="file"  />
+                    <input type="file" />
                 </label>
 
                 <label>
