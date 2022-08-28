@@ -26,7 +26,6 @@ const EditProfile = () => {
         e.preventDefault();
     }
 
-
     return (
         <div id="edit-profile">
             <h2>Edite seus dados</h2>
@@ -54,7 +53,7 @@ const EditProfile = () => {
 
                 <label>
                     <span>Imagem de Perfil:</span>
-                    <input type="file" onChange={handleFile} />
+                    <input type="file"  />
                 </label>
 
                 <label>
