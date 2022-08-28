@@ -14,9 +14,10 @@ const initialState = {
     loading: false,
 };
 
+// --- REGISTRO DE USUÁRIO -------------------------------------------------------------
 // Register a user and sign in : estar autenticado
 /* Argumentos da createAsyncThunk
-    arg1 - Da um nome para ela com a ação atual
+    arg1 - Da um nome para ela com a ação atual para poder usar depois nos tratamentos
     arg2 - função asyncrona usando a  thunkAPI
         thunkAPI permite parar a execução e identificar erros da api */
 export const register = createAsyncThunk("auth/register",
@@ -34,11 +35,27 @@ export const register = createAsyncThunk("auth/register",
     }
 );
 
+// --- LOGOUT DE USUÁRIO -------------------------------------------------------------
 // Logout a user
 export const logout = createAsyncThunk("auth/logout", async () => {
     //chama a função de logou la nos services
     await authService.logout();
 });
+
+// --- LOGIN DE USUÁRIO ---------------------------------------------------------------
+// Sing in a user
+export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
+    //pede para o backend fazer login
+    const data = await authService.login(user);
+
+    // Check for errors, se tem erro vai rejeitar 
+    if (data.errors) {
+        return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+});
+
 
 
 //trata cada estado e ação em separado
@@ -81,6 +98,21 @@ export const authSlice = createSlice({
                 state.success = true;
                 state.error = null;
             })
+            .addCase(login.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(login.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                state.user = action.payload;
+            })
+            .addCase(login.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                state.user = null;
+            });
     },
 });
 
