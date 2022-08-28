@@ -10,10 +10,10 @@ import { api, requestConfig } from "../utils/config";
 // Register a user, registrar um usuario 
 //função http assincrona
 //data= é os dados recebidos 
-const register = async (data) => {
+const register = async (user) => {
 
     //configura a requisição: monta a request
-    const config = requestConfig("POST", data);
+    const config = requestConfig("POST", user);
 
     try {
         //monta a request complesta apontando para a url correspondente 
@@ -41,11 +41,37 @@ const logout = () => {
     localStorage.removeItem("user");
 };
 
+// Sign in a user
+const login = async (user) => {
+    //cria request fazendo um post para o servidor 
+    const config = requestConfig("POST", user);
+
+    try {
+        //requisição de fetch ára a url de login, pega o retorno e transforma em objeto e pega um possivel erro
+        const res = await fetch(api + "/users/login", config)
+            .then((res) => res.json())
+            .catch((err) => err);
+
+        if (res) {
+
+            //se deu sucesso - coloca a resposta no local storage
+            localStorage.setItem("user", JSON.stringify(res));
+        }
+
+        //retorna a resposta
+        return res;
+
+    } catch (error) {
+        //printa o erro
+        console.log(error);
+    }
+};
 
 //retorna os objetos :
 const authService = {
     register,
     logout,
+    login,
 };
 
 export default authService;
