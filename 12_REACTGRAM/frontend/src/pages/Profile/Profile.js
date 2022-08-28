@@ -25,6 +25,7 @@ import { getUserDetails } from "../../slices/userSlice";
 import {
     publishPhoto,
     resetMessage,
+    getUserPhotos,
 } from "../../slices/photoSlice";
 
 
@@ -62,6 +63,8 @@ const Profile = () => {
     // Load user data, dispara quando cheda o id
     useEffect(() => {
         dispatch(getUserDetails(id));
+        //vai preencher a propriedade photo
+        dispatch(getUserPhotos(id));
     }, [dispatch, id]);
 
     // Reset component message
@@ -161,7 +164,33 @@ const Profile = () => {
                     {messagePhoto && <Message msg={messagePhoto} type="success" />}
                 </>
             )}
-
+            {/* Todos vão poder ver as fotos de qualquer usuario */}
+            <div className="user-photos">
+                <h2>Fotos publicadas:</h2>
+                <div className="photos-container">
+                    {photos && photos.map((photo) => (
+                        <div className="photo" key={photo._id}>
+                            {/* Valida se a foto veio antes de tentar exibir */}
+                            {photo.image && (
+                                <img
+                                    src={`${uploads}/photos/${photo.image}`}
+                                    alt={photo.title}
+                                />
+                            )}
+                            {/* Exibe as opções do CRUD da foto */}
+                            {id === userAuth._id ? (
+                                <p>Actions</p>
+                            ) : (
+                                <Link className="btn" to={`/photos/${photo._id}`}>
+                                    Ver
+                                </Link>
+                            )}
+                        </div>
+                    ))}
+                    {/* Cas o user nao tenha fotos publicadas */}
+                    {photos.length === 0 && <p>Ainda não há fotos publicadas...</p>}
+                </div>
+            </div>
         </div>
     )
 }
