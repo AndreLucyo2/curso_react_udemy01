@@ -30,7 +30,7 @@ const register = async (req, res) => {
     //valida se o usuario ja existe no sistema:
     if (user) {
         //caso true: gera uma erro re retorna.
-        res.status(422).json({ errors: ["Por favor, utilize outro e-mail."] });
+        res.status(422).json({ errors: ["E-mail ja cadastradi, por favor, utilize outro e-mail!"] });
         return;
     }
 

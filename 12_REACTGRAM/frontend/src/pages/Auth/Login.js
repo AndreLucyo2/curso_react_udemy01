@@ -6,8 +6,10 @@ import Message from "../../components/Message";
 
 // Hooks
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 // Redux
+import { login, reset } from "../../slices/authSlice";
 
 
 const Login = () => {
@@ -16,11 +18,34 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    //monitora os estados
+    const dispatch = useDispatch();
+
+    //pega os estados 
+    const { loading, error } = useSelector((state) => state.auth);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        //monta os dados para login
+        const user = {
+            email,
+            password,
+        };
+
+        console.log(user);
+
+        //faz o dispatch
+        dispatch(login(user));
+
     }
+
+    // Clean all auth states, limpa os estados quando disparar um dispatch
+    useEffect(() => {
+        dispatch(reset());
+    }, [dispatch]);
+
+
 
     return (
         <div id="login">
@@ -39,7 +64,9 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     value={password || ""}
                 />
-                <input type="submit" value="Entrar" />
+                {!loading && <input type="submit" value="Entrar" />}
+                {loading && <input type="submit" disabled value="Aguarde..." />}
+                {error && <Message msg={error} type="error" />}
             </form>
             <p>
                 Não tem uma conta? <Link to="/register">Clique aqui</Link>

@@ -21,8 +21,9 @@ const register = async (user) => {
         //Se der erro, pega e retorna o erro
         const res = await fetch(api + "/users/register", config).then((res) => res.json()).catch((err) => err);
 
-        //caso receber uma resposta: recebe a resposta do backend
-        if (res) {
+        //caso receber uma resposta do back end guarda no local storage
+        //só salva no local storage só se receber o id
+        if (res._id) {
             //salva no localStorage, para poder recuperar depois e extrair depois para validar se esta logado
             localStorage.setItem("user", JSON.stringify(res));
         }
@@ -52,8 +53,8 @@ const login = async (user) => {
             .then((res) => res.json())
             .catch((err) => err);
 
-        if (res) {
-
+        //só salva no local storage só se receber o id
+        if (res._id) {
             //se deu sucesso - coloca a resposta no local storage
             localStorage.setItem("user", JSON.stringify(res));
         }
