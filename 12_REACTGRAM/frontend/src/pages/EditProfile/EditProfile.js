@@ -45,7 +45,40 @@ const EditProfile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Gather user data from states, nome é obrigatorio
+        const userData = {
+            name,
+        };
 
+        //opcional, se tem manda , se nao tem nnão manda
+        if (profileImage) {
+            userData.profileImage = profileImage;
+        }
+        //opcional, se tem manda , se nao tem nnão manda
+        if (bio) {
+            userData.bio = bio;
+        }
+        //opcional, se tem manda , se nao tem nnão manda
+        if (password) {
+            userData.password = password;
+        }
+
+        // build form data, controi o objeto para receber os novos dados
+        const formData = new FormData();
+        //cria um objeto definindo as chaves com um laço dinamico 
+        const userFormData = Object.keys(userData).forEach((key) =>
+            formData.append(key, userData[key])
+        );
+        //carregar os dados no objeto completo
+        formData.append("user", userFormData);
+
+        //Manda a request para a API atualizar
+        await dispatch(updateProfile(formData));
+
+        //controle o tempo em que a messagem de sucesso fica visivel
+        setTimeout(() => {
+            dispatch(resetMessage());
+        }, 2000);
     }
 
     //lida com a imgem recebida
@@ -59,7 +92,6 @@ const EditProfile = () => {
         // change image state
         setProfileImage(image);
     };
-
 
     return (
         <div id="edit-profile">
@@ -125,7 +157,11 @@ const EditProfile = () => {
                     />
                 </label>
 
-                <input type="submit" value="Atualizar" />
+                {!loading && <input type="submit" value="Atualizar" />}
+                {loading && <input type="submit" disabled value="Aguarde..." />}
+                {error && <Message msg={error} type="error" />}
+                {message && <Message msg={message} type="success" />}
+
             </form>
 
         </div>
