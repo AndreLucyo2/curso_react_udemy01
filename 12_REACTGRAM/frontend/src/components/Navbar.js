@@ -20,6 +20,8 @@ import { useNavigate } from "react-router-dom";
 
 
 //Redux
+import { logout, reset } from "../slices/authSlice";
+
 
 const Navbar = () => {
     //pega a autenticação
@@ -27,6 +29,19 @@ const Navbar = () => {
     //pega os dados do user que esta registrado 
     const { user } = useSelector((state) => state.auth);
 
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+
+    //ação de logout
+    const handleLogout = () => {
+        //so tem ação e limpa os dados do back
+        dispatch(logout());
+        dispatch(reset());
+
+        //manda para a login, pois o user esta desconectado
+        navigate("/login");
+    };
 
 
     return (
@@ -57,7 +72,9 @@ const Navbar = () => {
                             </NavLink>
                         </li>
                         <li>
-                            <BsArrowBarRight />
+                            <span onClick={handleLogout}>
+                                <BsArrowBarRight />
+                            </span>
                         </li>
                     </>
                 ) : (
