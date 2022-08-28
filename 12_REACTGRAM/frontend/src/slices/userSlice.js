@@ -45,6 +45,23 @@ export const updateProfile = createAsyncThunk("user/update",
 );
 
 
+// Get user details com base no ID -- ver sobre a validação do token
+export const getUserDetails = createAsyncThunk("user/get",
+
+    async (id, thunkAPI) => {
+
+        const token = thunkAPI.getState().auth.user.token;
+
+        //api com validação
+        const data = await userService.getUserDetails(id, token);
+
+        console.log(data);
+
+        return data;
+    }
+);
+
+
 // -- REDUCER E CONTROLE DE ESTADOS ----------------------------------------------------- 
 //reducer , com o construtor do reducer pelos estados
 export const userSlice = createSlice({
@@ -83,6 +100,16 @@ export const userSlice = createSlice({
                 state.error = action.payload;
                 state.user = null;
             })
+            .addCase(getUserDetails.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getUserDetails.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                state.user = action.payload;
+            });
     }
 });
 

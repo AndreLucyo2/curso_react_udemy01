@@ -1,4 +1,4 @@
-// --- SERVA PARA TODAS AS VALIDAÇÕES -------------------
+// --- SERVE PARA TODAS AS VALIDAÇÕES -------------------
 
 const { validationResult } = require("express-validator");
 
