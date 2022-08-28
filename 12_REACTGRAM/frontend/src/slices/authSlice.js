@@ -34,12 +34,20 @@ export const register = createAsyncThunk("auth/register",
     }
 );
 
+// Logout a user
+export const logout = createAsyncThunk("auth/logout", async () => {
+    //chama a função de logou la nos services
+    await authService.logout();
+});
+
+
 //trata cada estado e ação em separado
 /* Register: casos tratados inicialmente no extraReducers : (builder) parte das execuções da api::
     register.pending = a requisição foi enviada porem ainda nao teve resposta, seta o stado pada refletir isso.
     register.fulfilled = tem o estado e a ação em si, executou e respondeu, pega o payload retornado, consegue trafegar dados
     register.rejected = se der erro rejeita e pega os dados do erro epo exibir na tela, anula o user pos nao tem dados cadastrados
-*/
+    logout.fulfilled = o que acontece quando feito o logout? limpar tudo
+    */
 export const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -66,7 +74,13 @@ export const authSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
                 state.user = null;
-            });
+            })
+            .addCase(logout.fulfilled, (state) => {
+                state.user = null;
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+            })
     },
 });
 
