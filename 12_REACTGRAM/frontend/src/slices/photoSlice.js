@@ -50,6 +50,15 @@ export const getUserPhotos = createAsyncThunk("photo/userphotos",
     }
 );
 
+//--- OBTER FOTO PELO ID ----------------------------------------------------
+// Get photo by id
+export const getPhoto = createAsyncThunk("photo/getphoto", async (id) => {
+
+    const data = await photoService.getPhoto(id);
+
+    return data;
+});
+
 //--- DELETAR FOTOS DO POSTADA PELO USER -------------------------------------------------------
 // Delete a photo
 export const deletePhoto = createAsyncThunk("photo/delete",
@@ -92,6 +101,7 @@ export const updatePhoto = createAsyncThunk("photo/update",
 );
 
 
+
 export const photoSlice = createSlice({
     name: "publish",
     initialState,
@@ -128,6 +138,17 @@ export const photoSlice = createSlice({
                 state.success = true;
                 state.error = null;
                 state.photos = action.payload;
+            })
+            .addCase(getPhoto.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getPhoto.fulfilled, (state, action) => {
+                console.log(action.payload);
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                state.photo = action.payload;
             })
             .addCase(deletePhoto.pending, (state) => {
                 state.loading = true;

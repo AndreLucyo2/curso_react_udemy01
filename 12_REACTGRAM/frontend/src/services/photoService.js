@@ -36,6 +36,22 @@ const getUserPhotos = async (id, token) => {
     }
 };
 
+// Get photo, pega o id pela url
+const getPhoto = async (id) => {
+    const config = requestConfig("GET");
+
+    try {
+        const res = await fetch(api + "/photos/" + id, config)
+            .then((res) => res.json())
+            .catch((err) => err);
+
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
 // Delete a photo, dele a foto postada pelo usuário, e percisa de autenticação
 const deletePhoto = async (id, token) => {
     const config = requestConfig("DELETE", null, token);
@@ -76,6 +92,7 @@ const photoService = {
     getUserPhotos,
     deletePhoto,
     updatePhoto,
+    getPhoto,
 };
 
 export default photoService;
