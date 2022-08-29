@@ -185,6 +185,7 @@ const Profile = () => {
                     <p>{user.bio}</p>
                 </div>
             </div>
+            
             {/*Checar se o usuario que esta acessando é o dono dele */}
             {id === userAuth._id && (
                 <>
@@ -243,6 +244,7 @@ const Profile = () => {
                     {messagePhoto && <Message msg={messagePhoto} type="success" />}
                 </>
             )}
+
             {/* Todos vão poder ver as fotos de qualquer usuario */}
             <div className="user-photos">
                 <h2>Fotos publicadas:</h2>
