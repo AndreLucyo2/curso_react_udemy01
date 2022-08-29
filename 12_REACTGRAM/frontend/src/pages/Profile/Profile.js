@@ -26,6 +26,7 @@ import {
     publishPhoto,
     resetMessage,
     getUserPhotos,
+    deletePhoto,
 } from "../../slices/photoSlice";
 
 
@@ -109,6 +110,15 @@ const Profile = () => {
 
     };
 
+    // Exclude an image
+    const handleDelete = (id) => {
+        //ativa a função 
+        dispatch(deletePhoto(id));
+
+        //mostra a mensagem por um tempo
+        resetComponentMessage();
+    };
+
     // Update photo title
     const handleUpdate = (e) => {
         e.preventDefault();
@@ -184,7 +194,7 @@ const Profile = () => {
                                         <BsFillEyeFill />
                                     </Link>
                                     <BsPencilFill />
-                                    <BsXLg />
+                                    <BsXLg onClick={() => handleDelete(photo._id)} />
                                 </div>
                             ) : (
                                 <Link className="btn" to={`/photos/${photo._id}`}>
