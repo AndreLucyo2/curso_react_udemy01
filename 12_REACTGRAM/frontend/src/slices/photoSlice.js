@@ -52,9 +52,11 @@ export const getUserPhotos = createAsyncThunk("photo/userphotos",
 
 //--- OBTER FOTO PELO ID ----------------------------------------------------
 // Get photo by id
-export const getPhoto = createAsyncThunk("photo/getphoto", async (id) => {
+export const getPhoto = createAsyncThunk("photo/getphoto", async (id, thunkAPI) => {
 
-    const data = await photoService.getPhoto(id);
+    const token = thunkAPI.getState().auth.user.token;
+
+    const data = await photoService.getPhoto(id, token);
 
     return data;
 });
