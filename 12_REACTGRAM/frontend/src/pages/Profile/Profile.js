@@ -27,6 +27,7 @@ import {
     resetMessage,
     getUserPhotos,
     deletePhoto,
+    updatePhoto,
 } from "../../slices/photoSlice";
 
 
@@ -53,6 +54,11 @@ const Profile = () => {
     //cria os estates da foto
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
+
+    //Estes para edição
+    const [editId, setEditId] = useState();
+    const [editImage, setEditImage] = useState();
+    const [editTitle, setEditTitle] = useState();
 
 
     //controle de fotos, acesso os dois forms a nivel de DOM deste elemento
@@ -119,10 +125,48 @@ const Profile = () => {
         resetComponentMessage();
     };
 
+    // Show or hide forms, alterna entre o form para exibir e editar, nunca se momstra junto
+    function hideOrShowForms() {
+        //se tiver sendo exibido oculta
+        newPhotoForm.current.classList.toggle("hide");
+        //se tiver sendo exibido exibe
+        editPhotoForm.current.classList.toggle("hide");
+    }
+
+
     // Update photo title
     const handleUpdate = (e) => {
         e.preventDefault();
 
+        //preenche para o update da foto
+        const photoData = {
+            title: editTitle,
+            id: editId,
+        };
+
+        dispatch(updatePhoto(photoData));
+
+        resetComponentMessage();
+    };
+
+    // Show edit form
+    const handleEdit = (photo) => {
+        //valida se a edição esta sendo exibido:
+        if (editPhotoForm.current.classList.contains("hide")) {
+            //exibe o form de edição
+            hideOrShowForms();
+        }
+
+        setEditId(photo._id);
+        setEditImage(photo.image);
+        setEditTitle(photo.title);
+    };
+
+    // Cancel editing
+    const handleCancelEdit = () => {
+        //trabalha com o evendo que controla a exibição 
+        //oculta o form de edição e momstra o de cadastrar
+        hideOrShowForms();
     };
 
     //espera carregar o user para mostrar os dados 
@@ -144,6 +188,7 @@ const Profile = () => {
             {/*Checar se o usuario que esta acessando é o dono dele */}
             {id === userAuth._id && (
                 <>
+                    {/* form para postar foto */}
                     <div className="new-photo" ref={newPhotoForm}>
                         <h3>Compartilhe algum momento seu:</h3>
                         <form onSubmit={submitHandle}>
@@ -169,6 +214,30 @@ const Profile = () => {
 
                         </form>
                     </div>
+
+                    {/* editar a foto */}
+                    <div className="edit-photo hide" ref={editPhotoForm}>
+                        <p>Editando:</p>
+                        {/* Checa se a imagem ja chegou */}
+                        {editImage && (
+                            <img src={`${uploads}/photos/${editImage}`} alt={editTitle} />
+                        )}
+                        {/* Form para alterar a foto */}
+                        <form onSubmit={handleUpdate}>
+                            <input
+                                type="text"
+                                placeholder="Insira novo título"
+                                onChange={(e) => setEditTitle(e.target.value)}
+                                value={editTitle || ""}
+                            />
+                            <input type="submit" value="Atualizar" />
+                            {/* opção de cancelar a edição */}
+                            <button className="cancel-btn" onClick={handleCancelEdit}>
+                                Cancelar edição
+                            </button>
+                        </form>
+                    </div>
+
                     {/* Valida e mostra se deu erro na foto*/}
                     {errorPhoto && <Message msg={errorPhoto} type="error" />}
                     {messagePhoto && <Message msg={messagePhoto} type="success" />}
@@ -193,7 +262,7 @@ const Profile = () => {
                                     <Link to={`/photos/${photo._id}`}>
                                         <BsFillEyeFill />
                                     </Link>
-                                    <BsPencilFill />
+                                    <BsPencilFill onClick={() => handleEdit(photo)} />
                                     <BsXLg onClick={() => handleDelete(photo._id)} />
                                 </div>
                             ) : (
