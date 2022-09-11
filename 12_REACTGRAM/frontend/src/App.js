@@ -19,8 +19,6 @@ import Profile from "./pages/Profile/Profile";
 import Photo from "./pages/Photo/Photo";
 import Search from "./pages/Search/Search";
 
-
-
 function App() {
   //valida se esta autenticado
   const { auth, loading } = useAuth();
