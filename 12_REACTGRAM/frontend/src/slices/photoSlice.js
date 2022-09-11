@@ -14,41 +14,37 @@ const initialState = {
 //Funções
 //--- PUBLICAR FOTO --------------------------------------------------------------------------
 // Publish an user's photo
-export const publishPhoto = createAsyncThunk("photo/publish",
-    async (photo, thunkAPI) => {
-        //obtem o token
-        const token = thunkAPI.getState().auth.user.token;
+export const publishPhoto = createAsyncThunk("photo/publish", async (photo, thunkAPI) => {
+    //obtem o token
+    const token = thunkAPI.getState().auth.user.token;
 
-        //pega os dados da requisição
-        const data = await photoService.publishPhoto(photo, token);
+    //pega os dados da requisição
+    const data = await photoService.publishPhoto(photo, token);
 
-        console.log(data.errors);
+    console.log(data.errors);
 
-        // Check for errors, retorna o erro para o form
-        if (data.errors) {
-            return thunkAPI.rejectWithValue(data.errors[0]);
-        }
-
-        return data;
+    // Check for errors, retorna o erro para o form
+    if (data.errors) {
+        return thunkAPI.rejectWithValue(data.errors[0]);
     }
-);
+
+    return data;
+});
 
 //--- OBTER A LISTA DAS FOTOS DO USER -------------------------------------------------------
 // Get user photos
-export const getUserPhotos = createAsyncThunk("photo/userphotos",
-    async (id, thunkAPI) => {
+export const getUserPhotos = createAsyncThunk("photo/userphotos", async (id, thunkAPI) => {
 
-        const token = thunkAPI.getState().auth.user.token;
+    const token = thunkAPI.getState().auth.user.token;
 
-        //como é uma rota privada precisa passar o token
-        const data = await photoService.getUserPhotos(id, token);
+    //como é uma rota privada precisa passar o token
+    const data = await photoService.getUserPhotos(id, token);
 
-        console.log(data);
-        console.log(data.errors);
+    console.log(data);
+    console.log(data.errors);
 
-        return data;
-    }
-);
+    return data;
+});
 
 //--- OBTER FOTO PELO ID ----------------------------------------------------
 // Get photo by id
@@ -63,44 +59,40 @@ export const getPhoto = createAsyncThunk("photo/getphoto", async (id, thunkAPI) 
 
 //--- DELETAR FOTOS DO POSTADA PELO USER -------------------------------------------------------
 // Delete a photo
-export const deletePhoto = createAsyncThunk("photo/delete",
-    async (id, thunkAPI) => {
-        const token = thunkAPI.getState().auth.user.token;
+export const deletePhoto = createAsyncThunk("photo/delete", async (id, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
 
-        const data = await photoService.deletePhoto(id, token);
+    const data = await photoService.deletePhoto(id, token);
 
-        console.log(data.errors);
+    console.log(data.errors);
 
-        // Check for errors
-        if (data.errors) {
-            return thunkAPI.rejectWithValue(data.errors[0]);
-        }
-
-        return data;
+    // Check for errors
+    if (data.errors) {
+        return thunkAPI.rejectWithValue(data.errors[0]);
     }
-);
+
+    return data;
+});
 
 //--- ALTERAR A FOTOS DO POSTADA PELO USER ----------------------------------------------------
 // Update a photo
-export const updatePhoto = createAsyncThunk("photo/update",
-    async (photoData, thunkAPI) => {
+export const updatePhoto = createAsyncThunk("photo/update", async (photoData, thunkAPI) => {
 
-        const token = thunkAPI.getState().auth.user.token;
+    const token = thunkAPI.getState().auth.user.token;
 
-        const data = await photoService.updatePhoto(
-            { title: photoData.title },
-            photoData.id,
-            token
-        );
+    const data = await photoService.updatePhoto(
+        { title: photoData.title },
+        photoData.id,
+        token
+    );
 
-        // Check for errors
-        if (data.errors) {
-            return thunkAPI.rejectWithValue(data.errors[0]);
-        }
-
-        return data;
+    // Check for errors
+    if (data.errors) {
+        return thunkAPI.rejectWithValue(data.errors[0]);
     }
-);
+
+    return data;
+});
 
 // Like a photo
 export const like = createAsyncThunk("photo/like", async (id, thunkAPI) => {
@@ -117,6 +109,25 @@ export const like = createAsyncThunk("photo/like", async (id, thunkAPI) => {
 
     return data;
 });
+
+// Add comment to a photo
+export const comment = createAsyncThunk("photo/comment", async (photoData, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+
+    const data = await photoService.comment(
+        { comment: photoData.comment },
+        photoData.id,
+        token
+    );
+
+    // Check for errors
+    if (data.errors) {
+        return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+});
+
 
 export const photoSlice = createSlice({
     name: "publish",
@@ -235,6 +246,19 @@ export const photoSlice = createSlice({
                 state.message = action.payload.message;
             })
             .addCase(like.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(comment.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                //Adiciona o novo comentario no array
+                state.photo.comments.push(action.payload.comment);
+
+                state.message = action.payload.message;
+            })
+            .addCase(comment.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })
