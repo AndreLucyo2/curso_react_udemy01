@@ -1,5 +1,6 @@
 import "./PhotoItem.css";
 
+//caminho para os arquivos das imagens
 import { uploads } from "../utils/config";
 
 import { Link } from "react-router-dom";

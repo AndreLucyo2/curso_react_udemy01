@@ -23,34 +23,33 @@ function Photo() {
 
     //obtem o user logado
     const { user } = useSelector((state) => state.auth);
+
     //pega alguns dados da foto
     const { photo, loading, error, message } = useSelector((state) => state.photo);
 
     //comentario
 
-    //load foto data
+    //Load foto data, entra na pagina ja vai ter a foto sendo carregada
     useEffect(() => {
         dispatch(getPhoto(id));
     }, [dispatch, id]);
 
 
-    // Like a photo
+    //Like a photo e comentario
 
 
 
-
+    //Caso em load
     if (loading) {
         return <p>Carregando...</p>;
-    }
+    };
 
-
-
-
+    //Retorna o elemento:
     return (
         <div id="photo">
             <PhotoItem photo={photo} />
         </div>
-    )
+    );
 }
 
 export default Photo
