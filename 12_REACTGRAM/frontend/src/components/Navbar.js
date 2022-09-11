@@ -33,6 +33,8 @@ const Navbar = () => {
 
     const dispatch = useDispatch();
 
+    const [query, setQuery] = useState("");
+
     //ação de logout
     const handleLogout = () => {
         //so tem ação e limpa os dados do back
@@ -43,13 +45,27 @@ const Navbar = () => {
         navigate("/login");
     };
 
+    //função de busca:
+    const handleSearch = (e) => {
+        e.preventDefault();
+
+        //se tiver algo na busca:
+        if (query) {
+            //redireciona e monta a query
+            return navigate(`/search?q=${query}`);
+        }
+    };
 
     return (
         <nav id="nav">
             <Link to="/">ReactGram</Link>
-            <form id="search-form">
+            <form id="search-form" onSubmit={handleSearch}>
                 <BsSearch />
-                <input type="text" />
+                <input
+                    type="text"
+                    placeholder="Pesquisar"
+                    onChange={(e) => setQuery(e.target.value)}
+                />
             </form>
             <ul id="nav-links">
                 {auth ? (

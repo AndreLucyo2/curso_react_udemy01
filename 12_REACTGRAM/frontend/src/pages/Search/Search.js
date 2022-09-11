@@ -2,6 +2,7 @@ import "./Search.css";
 
 // hooks
 import { useEffect } from "react";
+import { useQuery } from "../../hooks/useQuery";
 import { useSelector, useDispatch } from "react-redux";
 import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 
