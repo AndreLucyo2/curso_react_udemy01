@@ -14,7 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 // Redux
-import { getPhoto } from "../../slices/photoSlice";
+import { getPhoto, like } from "../../slices/photoSlice";
+import LikeContainer from "../../components/LikeContainer";
 
 function Photo() {
     const { id } = useParams();
@@ -36,8 +37,10 @@ function Photo() {
 
 
     //Like a photo e comentario
-
-
+    const handleLike = () => {
+        //executa o like na foto
+        dispatch(like(photo._id));
+    };
 
     //Caso em load
     if (loading) {
@@ -48,6 +51,7 @@ function Photo() {
     return (
         <div id="photo">
             <PhotoItem photo={photo} />
+            <LikeContainer photo={photo} user={user} handleLike={handleLike} />
         </div>
     );
 }
