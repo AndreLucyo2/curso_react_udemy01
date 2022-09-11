@@ -128,9 +128,11 @@ export const comment = createAsyncThunk("photo/comment", async (commentData, thu
     return data;
 });
 
-// Get all photos, obtem todas as fotos
-export const getPhotos = createAsyncThunk("photo/getall", async () => {
-    const data = await photoService.getPhotos();
+export const getPhotos = createAsyncThunk("photo/getall", async (_, thunkAPI) => {
+
+    const token = thunkAPI.getState().auth.user.token;
+
+    const data = await photoService.getPhotos(token);
 
     return data;
 });
@@ -269,7 +271,7 @@ export const photoSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
-            .addCase(getPhotos.pending, (state) => {               
+            .addCase(getPhotos.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
