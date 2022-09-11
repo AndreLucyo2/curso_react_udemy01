@@ -128,6 +128,13 @@ export const comment = createAsyncThunk("photo/comment", async (commentData, thu
     return data;
 });
 
+// Get all photos, obtem todas as fotos
+export const getPhotos = createAsyncThunk("photo/getall", async () => {
+    const data = await photoService.getPhotos();
+
+    return data;
+});
+
 
 export const photoSlice = createSlice({
     name: "publish",
@@ -261,6 +268,18 @@ export const photoSlice = createSlice({
             .addCase(comment.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
+            })
+            .addCase(getPhotos.pending, (state) => {               
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getPhotos.fulfilled, (state, action) => {
+                //implementar paginação no carregamento das fotos
+                console.log(action.payload);
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                state.photos = action.payload;
             })
     }
 });
