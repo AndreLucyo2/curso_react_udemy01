@@ -102,7 +102,21 @@ export const updatePhoto = createAsyncThunk("photo/update",
     }
 );
 
+// Like a photo
+export const like = createAsyncThunk("photo/like", async (id, thunkAPI) => {
+    //obtem o token
+    const token = thunkAPI.getState().auth.user.token;
 
+    //faz o envio do like
+    const data = await photoService.like(id, token);
+
+    // Check for errors
+    if (data.errors) {
+        return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+});
 
 export const photoSlice = createSlice({
     name: "publish",
@@ -196,6 +210,33 @@ export const photoSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
                 state.photo = null;
+            })
+            .addCase(like.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+
+                //Colocar o id do user nos likes da foto individual
+                if (state.photo.likes) {
+                    //valida se tem o array, e adiciona o id do user que veio pela requisição
+                    state.photo.likes.push(action.payload.userId);
+                }
+
+                //Colocar o id do user nos likes encontra a foto nas fotos que estão sendo exibidas
+                state.photos.map((photo) => {
+                    //Colocar o id do user nos likes da foto na home ou na busca
+                    if (photo._id === action.payload.photoId) {
+                        //adiciona o id do user que veio pela requisição
+                        return photo.likes.push(action.payload.userId);
+                    }
+                    return photo;
+                });
+
+                state.message = action.payload.message;
+            })
+            .addCase(like.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
             })
     }
 });
